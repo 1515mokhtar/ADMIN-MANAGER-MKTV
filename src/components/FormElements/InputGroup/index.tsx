@@ -17,6 +17,9 @@ type InputGroupProps = {
   iconPosition?: "left" | "right";
   height?: "sm" | "default";
   defaultValue?: string;
+  min?: string;
+  max?: string;
+  step?: string;
 };
 
 const InputGroup: React.FC<InputGroupProps> = ({
@@ -59,6 +62,9 @@ const InputGroup: React.FC<InputGroupProps> = ({
           onChange={handleChange}
           value={props.value}
           defaultValue={props.defaultValue}
+          min={props.min}
+          max={props.max}
+          step={props.step}
           className={cn(
             "w-full rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition focus:border-primary disabled:cursor-default disabled:bg-gray-2 data-[active=true]:border-primary dark:border-dark-3 dark:bg-dark-2 dark:focus:border-primary dark:disabled:bg-dark dark:data-[active=true]:border-primary",
             type === "file"
