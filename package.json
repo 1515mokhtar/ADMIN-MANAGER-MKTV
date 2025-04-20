@@ -15,6 +15,7 @@
     "dayjs": "^1.11.13",
     "firebase": "^11.6.0",
     "flatpickr": "^4.6.13",
+    "js-cookie": "^3.0.5",
     "jsvectormap": "^1.6.0",
     "next": "14.1.0",
     "next-themes": "^0.4.4",
@@ -25,6 +26,7 @@
     "tailwind-merge": "^2.6.0"
   },
   "devDependencies": {
+    "@types/js-cookie": "^3.0.6",
     "@types/node": "^20",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
