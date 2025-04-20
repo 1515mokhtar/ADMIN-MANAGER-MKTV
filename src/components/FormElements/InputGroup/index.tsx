@@ -20,6 +20,7 @@ type InputGroupProps = {
   min?: string;
   max?: string;
   step?: string;
+  readOnly?: boolean;
 };
 
 const InputGroup: React.FC<InputGroupProps> = ({
@@ -65,6 +66,7 @@ const InputGroup: React.FC<InputGroupProps> = ({
           min={props.min}
           max={props.max}
           step={props.step}
+          readOnly={props.readOnly}
           className={cn(
             "w-full rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition focus:border-primary disabled:cursor-default disabled:bg-gray-2 data-[active=true]:border-primary dark:border-dark-3 dark:bg-dark-2 dark:focus:border-primary dark:disabled:bg-dark dark:data-[active=true]:border-primary",
             type === "file"
