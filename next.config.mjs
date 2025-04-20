@@ -27,7 +27,10 @@ const nextConfig = {
   webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
-      '@': './src'
+      '@': './src',
+      '@/components': './src/components',
+      '@/contexts': './src/contexts',
+      '@/hooks': './src/hooks'
     };
     return config;
   }
