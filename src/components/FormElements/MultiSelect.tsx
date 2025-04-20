@@ -170,6 +170,8 @@ const MultiSelect: React.FC<DropdownProps> = ({ id }) => {
                       type="button"
                       onClick={open}
                       className="cursor-pointer text-dark-4 outline-none focus:outline-none dark:text-dark-6"
+                      title="Toggle dropdown"
+                      aria-label="Toggle dropdown"
                     >
                       <svg
                         className="fill-current"

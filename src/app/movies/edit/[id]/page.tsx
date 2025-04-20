@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { use } from "react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import { default as InputGroup } from "@/components/FormElements/InputGroup";
 import { TextAreaGroup } from "@/components/FormElements/InputGroup/text-area";
@@ -10,12 +9,11 @@ import { Select } from "@/components/FormElements/select";
 import { useMovies } from "../../hooks/useMovies";
 import { Movie } from "../../types";
 
-export default function EditMoviePage({ params }: { params: Promise<{ id: string }> }) {
+export default function EditMoviePage({ params }: { params: { id: string } }) {
   const router = useRouter();
   const { movies, updateMovie } = useMovies();
   const [movie, setMovie] = useState<Movie | null>(null);
-  const resolvedParams = use(params);
-  const id = resolvedParams.id;
+  const id = params.id;
 
   useEffect(() => {
     const currentMovie = movies.find((m) => m.id === id);
@@ -86,8 +84,9 @@ export default function EditMoviePage({ params }: { params: Promise<{ id: string
               name="movieId"
               type="text"
               placeholder="ID unique du film"
-              defaultValue={movie.movieId}
+              defaultValue={movie.id}
               required
+              readOnly
             />
           </div>
 

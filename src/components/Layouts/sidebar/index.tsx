@@ -13,7 +13,7 @@ import { useSidebarContext } from "./sidebar-context";
 export function Sidebar() {
   const pathname = usePathname();
   const { setIsOpen, isOpen, isMobile, toggleSidebar } = useSidebarContext();
-  const [expandedItems, setExpandedItems] = useState<string[]>([]);
+  const [expandedItems, setExpandedItems] = useState<string[]>(["Dashboard"]);
 
   const toggleExpanded = useCallback((title: string) => {
     setExpandedItems((prev) => (prev.includes(title) ? [] : [title]));
@@ -126,6 +126,7 @@ export function Sidebar() {
                                       title={subItem.title}
                                       icon={subItem.icon}
                                       isActive={pathname === subItem.url}
+                                      className="text-black dark:text-white font-medium"
                                     />
                                   </li>
                                 ))}

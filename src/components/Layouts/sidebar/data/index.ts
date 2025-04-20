@@ -11,10 +11,12 @@ export const NAV_DATA = [
           {
             title: "eCommerce",
             url: "/",
+            icon: Icons.HomeIcon,
           },
           {
             title: "Movies",
             url: "/movies",
+            icon: Icons.HomeIcon,
           },
         ],
       },
@@ -32,6 +34,7 @@ export const NAV_DATA = [
           {
             title: "Tables",
             url: "/tables",
+            icon: Icons.Table,
           },
         ],
       },
@@ -42,6 +45,7 @@ export const NAV_DATA = [
           {
             title: "Settings",
             url: "/pages/settings",
+            icon: Icons.Alphabet,
           },
         ],
       },
@@ -57,6 +61,7 @@ export const NAV_DATA = [
           {
             title: "Basic Chart",
             url: "/charts/basic-chart",
+            icon: Icons.PieChart,
           },
         ],
       },
@@ -67,10 +72,12 @@ export const NAV_DATA = [
           {
             title: "Alerts",
             url: "/ui-elements/alerts",
+            icon: Icons.FourCircle,
           },
           {
             title: "Buttons",
             url: "/ui-elements/buttons",
+            icon: Icons.FourCircle,
           },
         ],
       }

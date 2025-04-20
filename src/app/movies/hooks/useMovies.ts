@@ -37,6 +37,7 @@ export function useMovies() {
 
   const updateMovie = async (id: string, movieData: MovieFormData) => {
     try {
+      console.log("Updating movie with data:", movieData);
       const movieRef = doc(db, "movies", id);
       await updateDoc(movieRef, movieData);
     } catch (error) {
