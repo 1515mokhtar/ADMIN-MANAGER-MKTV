@@ -10,7 +10,7 @@ export default function AccessDenied() {
       <div className="rounded-lg bg-white p-8 shadow-lg dark:bg-gray-800">
         <h1 className="mb-4 text-2xl font-bold text-red-600">Access Denied</h1>
         <p className="mb-6 text-gray-600 dark:text-gray-300">
-          You don't have permission to access this page. Please contact the administrator.
+          You don&apos;t have permission to access this page. Please contact the administrator.
         </p>
         <button
           onClick={() => router.push("/auth/sign-in")}

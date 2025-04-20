@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/auth-context';
 import { useRouter } from 'next/navigation';
-import Cookies from 'js-cookie';
 
 interface AuthState {
   isAuthenticated: boolean;
@@ -21,17 +20,6 @@ export function useAuthState(requireAdmin: boolean = false): AuthState {
   });
 
   useEffect(() => {
-    // Gérer la persistance de session avec les cookies
-    if (user) {
-      Cookies.set('auth-token', 'true', { expires: 7 }); // 7 jours
-      if (isAdmin) {
-        Cookies.set('admin-role', 'true', { expires: 7 });
-      }
-    } else {
-      Cookies.remove('auth-token');
-      Cookies.remove('admin-role');
-    }
-
     // Vérifier les permissions
     if (!loading) {
       if (!user) {

@@ -64,7 +64,7 @@ export default function ProfilePage() {
           <h1 className="mb-8 text-3xl font-bold">Profil utilisateur</h1>
           <div className="rounded-lg bg-white p-6 shadow-lg">
             <div className="text-center">
-              <h2 className="mb-4 text-xl font-semibold">Vous n'êtes pas connecté</h2>
+              <h2 className="mb-4 text-xl font-semibold">Vous n&apos;êtes pas connecté</h2>
               <p className="mb-6 text-gray-600">Veuillez vous connecter pour accéder à votre profil.</p>
               <button
                 onClick={() => router.push('/login')}

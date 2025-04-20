@@ -40,7 +40,7 @@ export function Sidebar() {
         });
       });
     });
-  }, [pathname]);
+  }, [pathname, expandedItems, toggleExpanded]);
 
   return (
     <>
@@ -99,72 +99,45 @@ export function Sidebar() {
                       <li key={item.title}>
                         {item.items.length ? (
                           <div>
-                            <MenuItem
-                              isActive={item.items.some(
-                                ({ url }) => url === pathname,
-                              )}
+                            <button
                               onClick={() => toggleExpanded(item.title)}
+                              className={cn(
+                                "flex w-full items-center justify-between rounded-lg px-4 py-2 text-sm font-medium transition-colors",
+                                expandedItems.includes(item.title)
+                                  ? "bg-primary/10 text-primary"
+                                  : "text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+                              )}
                             >
-                              <item.icon
-                                className="size-6 shrink-0"
-                                aria-hidden="true"
-                              />
-
                               <span>{item.title}</span>
-
                               <ChevronUp
                                 className={cn(
-                                  "ml-auto rotate-180 transition-transform duration-200",
-                                  expandedItems.includes(item.title) &&
-                                    "rotate-0",
+                                  "h-4 w-4 transition-transform",
+                                  expandedItems.includes(item.title) ? "rotate-180" : ""
                                 )}
-                                aria-hidden="true"
                               />
-                            </MenuItem>
-
+                            </button>
                             {expandedItems.includes(item.title) && (
-                              <ul
-                                className="ml-9 mr-0 space-y-1.5 pb-[15px] pr-0 pt-2"
-                                role="menu"
-                              >
+                              <ul className="mt-2 space-y-1 pl-4">
                                 {item.items.map((subItem) => (
-                                  <li key={subItem.title} role="none">
+                                  <li key={subItem.title}>
                                     <MenuItem
-                                      as="link"
                                       href={subItem.url}
+                                      title={subItem.title}
+                                      icon={subItem.icon}
                                       isActive={pathname === subItem.url}
-                                    >
-                                      <span>{subItem.title}</span>
-                                    </MenuItem>
+                                    />
                                   </li>
                                 ))}
                               </ul>
                             )}
                           </div>
                         ) : (
-                          (() => {
-                            const href =
-                              "url" in item
-                                ? item.url + ""
-                                : "/" +
-                                  item.title.toLowerCase().split(" ").join("-");
-
-                            return (
-                              <MenuItem
-                                className="flex items-center gap-3 py-3"
-                                as="link"
-                                href={href}
-                                isActive={pathname === href}
-                              >
-                                <item.icon
-                                  className="size-6 shrink-0"
-                                  aria-hidden="true"
-                                />
-
-                                <span>{item.title}</span>
-                              </MenuItem>
-                            );
-                          })()
+                          <MenuItem
+                            href={item.url}
+                            title={item.title}
+                            icon={item.icon}
+                            isActive={pathname === item.url}
+                          />
                         )}
                       </li>
                     ))}

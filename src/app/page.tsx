@@ -13,7 +13,7 @@ export default function HomePage() {
           Bienvenue, {user?.email}
         </p>
         <p className="mt-2">
-          Vous êtes connecté en tant qu'administrateur.
+          Vous êtes connecté en tant qu&apos;administrateur.
         </p>
       </div>
     </div>
