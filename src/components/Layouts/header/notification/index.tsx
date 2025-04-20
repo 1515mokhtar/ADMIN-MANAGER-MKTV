@@ -76,50 +76,58 @@ export function Notification() {
       <DropdownContent
         align={isMobile ? "end" : "center"}
         className="border border-stroke bg-white px-3.5 py-3 shadow-md dark:border-dark-3 dark:bg-gray-dark min-[350px]:min-w-[20rem]"
+        role="menu"
+        aria-label="Notifications menu"
       >
         <div className="mb-1 flex items-center justify-between px-2 py-1.5">
           <span className="text-lg font-medium text-dark dark:text-white">
             Notifications
           </span>
-          <span className="rounded-md bg-primary px-[9px] py-0.5 text-xs font-medium text-white">
+          <span className="rounded-md bg-primary px-[9px] py-0.5 text-xs font-medium text-white" role="status">
             5 new
           </span>
         </div>
 
-        <ul className="mb-3 max-h-[23rem] space-y-1.5 overflow-y-auto">
-          {notificationList.map((item, index) => (
-            <li key={index} role="menuitem">
-              <Link
-                href="#"
-                onClick={() => setIsOpen(false)}
-                className="flex items-center gap-4 rounded-lg px-2 py-1.5 outline-none hover:bg-gray-2 focus-visible:bg-gray-2 dark:hover:bg-dark-3 dark:focus-visible:bg-dark-3"
-              >
-                <Image
-                  src={item.image}
-                  className="size-14 rounded-full object-cover"
-                  width={200}
-                  height={200}
-                  alt="User"
-                />
+        <div role="group" aria-label="Notification list">
+          <ul className="mb-3 max-h-[23rem] space-y-1.5 overflow-y-auto">
+            {notificationList.map((item, index) => (
+              <li key={index}>
+                <Link
+                  href="#"
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center gap-4 rounded-lg px-2 py-1.5 outline-none hover:bg-gray-2 focus-visible:bg-gray-2 dark:hover:bg-dark-3 dark:focus-visible:bg-dark-3"
+                  role="menuitem"
+                  aria-label={`${item.title}: ${item.subTitle}`}
+                >
+                  <Image
+                    src={item.image}
+                    className="size-14 rounded-full object-cover"
+                    width={200}
+                    height={200}
+                    alt={`Profile picture for ${item.title}`}
+                  />
 
-                <div>
-                  <strong className="block text-sm font-medium text-dark dark:text-white">
-                    {item.title}
-                  </strong>
+                  <div>
+                    <strong className="block text-sm font-medium text-dark dark:text-white">
+                      {item.title}
+                    </strong>
 
-                  <span className="truncate text-sm font-medium text-dark-5 dark:text-dark-6">
-                    {item.subTitle}
-                  </span>
-                </div>
-              </Link>
-            </li>
-          ))}
-        </ul>
+                    <span className="truncate text-sm font-medium text-dark-5 dark:text-dark-6">
+                      {item.subTitle}
+                    </span>
+                  </div>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
 
         <Link
           href="#"
           onClick={() => setIsOpen(false)}
           className="block rounded-lg border border-primary p-2 text-center text-sm font-medium tracking-wide text-primary outline-none transition-colors hover:bg-blue-light-5 focus:bg-blue-light-5 focus:text-primary focus-visible:border-primary dark:border-dark-3 dark:text-dark-6 dark:hover:border-dark-5 dark:hover:bg-dark-3 dark:hover:text-dark-7 dark:focus-visible:border-dark-5 dark:focus-visible:bg-dark-3 dark:focus-visible:text-dark-7"
+          role="menuitem"
+          aria-label="View all notifications"
         >
           See all notifications
         </Link>

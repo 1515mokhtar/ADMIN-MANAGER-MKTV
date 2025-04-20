@@ -100,7 +100,12 @@ const MultiSelect: React.FC<DropdownProps> = ({ id }) => {
         Multiselect Dropdown
       </label>
       <div>
-        <select className="hidden" id={id}>
+        <select 
+          className="hidden" 
+          id={id}
+          aria-label="Select options"
+          title="Select options"
+        >
           <option value="1">Design</option>
           <option value="2">Development</option>
           <option value="3">Option 4</option>
@@ -126,6 +131,9 @@ const MultiSelect: React.FC<DropdownProps> = ({ id }) => {
                           <div
                             onClick={() => remove(index)}
                             className="cursor-pointer pl-1 hover:text-red"
+                            role="button"
+                            aria-label={`Remove ${options[index].text}`}
+                            title={`Remove ${options[index].text}`}
                           >
                             <svg
                               className="fill-current"

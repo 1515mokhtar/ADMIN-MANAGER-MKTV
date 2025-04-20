@@ -9,7 +9,8 @@ import { ChatsCard } from "./_components/chats-card";
 import { OverviewCardsGroup } from "./_components/overview-cards";
 import { OverviewCardsSkeleton } from "./_components/overview-cards/skeleton";
 import { RegionLabels } from "./_components/region-labels";
-import ProtectedRoute from "@/components/auth/ProtectedRoute";
+import ProtectedRoute from "@/components/Auth/ProtectedRoute";
+
 type PropsType = {
   searchParams: Promise<{
     selected_time_frame?: string;
@@ -21,8 +22,7 @@ export default async function Home({ searchParams }: PropsType) {
   const extractTimeFrame = createTimeFrameExtractor(selected_time_frame);
 
   return (
-    
-     <ProtectedRoute>
+    <ProtectedRoute>
       <Suspense fallback={<OverviewCardsSkeleton />}>
         <OverviewCardsGroup />
       </Suspense>
@@ -58,7 +58,6 @@ export default async function Home({ searchParams }: PropsType) {
           <ChatsCard />
         </Suspense>
       </div>
-  
     </ProtectedRoute>
   );
 }
