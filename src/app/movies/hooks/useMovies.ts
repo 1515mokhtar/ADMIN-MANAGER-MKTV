@@ -39,7 +39,11 @@ export function useMovies() {
     try {
       console.log("Updating movie with data:", movieData);
       const movieRef = doc(db, "movies", id);
-      await updateDoc(movieRef, movieData);
+      
+      // Remove movieId from the data to be updated
+      const { movieId, ...dataToUpdate } = movieData;
+      
+      await updateDoc(movieRef, dataToUpdate);
     } catch (error) {
       console.error("Error updating movie:", error);
       throw error;
