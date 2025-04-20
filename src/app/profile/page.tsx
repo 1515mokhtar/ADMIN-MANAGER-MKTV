@@ -9,6 +9,7 @@ import { SocialAccounts } from "./_components/social-accounts";
 import { useRouter } from 'next/navigation';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
+import { FormSelect } from "@/components/FormElements/FormSelect";
 
 export default function ProfilePage() {
   const { user, userData, logout } = useAuth();
