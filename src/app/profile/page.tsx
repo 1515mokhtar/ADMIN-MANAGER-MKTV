@@ -3,7 +3,7 @@
 import { useAuth } from '@/contexts/auth-context';
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { CameraIcon } from "./_components/icons";
 import { SocialAccounts } from "./_components/social-accounts";
 import { useRouter } from 'next/navigation';
@@ -16,6 +16,7 @@ export default function ProfilePage() {
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [loading, setLoading] = useState(true);
   const [profileData, setProfileData] = useState<any>(null);
+  const activeElementRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
