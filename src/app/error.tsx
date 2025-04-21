@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 export default function Error({
   error,
@@ -22,12 +22,18 @@ export default function Error({
         {error.message || 'An unexpected error occurred'}
       </p>
       <div className="flex gap-4">
-        <Button onClick={() => reset()} variant="default">
+        <button 
+          onClick={() => reset()} 
+          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+        >
           Try again
-        </Button>
-        <Button onClick={() => window.location.href = '/'} variant="outline">
+        </button>
+        <Link 
+          href="/" 
+          className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100"
+        >
           Go to homepage
-        </Button>
+        </Link>
       </div>
     </div>
   );

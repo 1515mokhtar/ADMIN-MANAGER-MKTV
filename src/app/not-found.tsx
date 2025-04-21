@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
 
 export default function NotFound() {
   return (
@@ -9,9 +8,12 @@ export default function NotFound() {
       <p className="mb-6 text-gray-600 dark:text-gray-400">
         The page you are looking for does not exist or has been moved.
       </p>
-      <Button asChild>
-        <Link href="/">Return to Homepage</Link>
-      </Button>
+      <Link 
+        href="/" 
+        className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+      >
+        Return to Homepage
+      </Link>
     </div>
   );
 } 
