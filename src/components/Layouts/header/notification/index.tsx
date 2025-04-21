@@ -76,8 +76,6 @@ export function Notification() {
       <DropdownContent
         align={isMobile ? "end" : "center"}
         className="border border-stroke bg-white px-3.5 py-3 shadow-md dark:border-dark-3 dark:bg-gray-dark min-[350px]:min-w-[20rem]"
-        role="menu"
-        aria-label="Notifications menu"
       >
         <div className="mb-1 flex items-center justify-between px-2 py-1.5">
           <span className="text-lg font-medium text-dark dark:text-white">
@@ -99,22 +97,22 @@ export function Notification() {
                   role="menuitem"
                   aria-label={`${item.title}: ${item.subTitle}`}
                 >
-                  <Image
-                    src={item.image}
-                    className="size-14 rounded-full object-cover"
-                    width={200}
-                    height={200}
-                    alt={`Profile picture for ${item.title}`}
-                  />
+                  <div className="relative size-10 overflow-hidden rounded-full">
+                    <Image
+                      src={item.image}
+                      alt={`${item.title} notification`}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
 
                   <div>
-                    <strong className="block text-sm font-medium text-dark dark:text-white">
+                    <p className="text-sm font-medium text-dark dark:text-white">
                       {item.title}
-                    </strong>
-
-                    <span className="truncate text-sm font-medium text-dark-5 dark:text-dark-6">
+                    </p>
+                    <p className="text-xs text-dark-6 dark:text-dark-6">
                       {item.subTitle}
-                    </span>
+                    </p>
                   </div>
                 </Link>
               </li>
@@ -125,9 +123,9 @@ export function Notification() {
         <Link
           href="#"
           onClick={() => setIsOpen(false)}
-          className="block rounded-lg border border-primary p-2 text-center text-sm font-medium tracking-wide text-primary outline-none transition-colors hover:bg-blue-light-5 focus:bg-blue-light-5 focus:text-primary focus-visible:border-primary dark:border-dark-3 dark:text-dark-6 dark:hover:border-dark-5 dark:hover:bg-dark-3 dark:hover:text-dark-7 dark:focus-visible:border-dark-5 dark:focus-visible:bg-dark-3 dark:focus-visible:text-dark-7"
+          className="block rounded-lg bg-gray-2 px-2 py-1.5 text-center text-sm font-medium text-dark outline-none hover:bg-gray-3 focus-visible:bg-gray-3 dark:bg-dark-3 dark:text-white dark:hover:bg-dark-4 dark:focus-visible:bg-dark-4"
           role="menuitem"
-          aria-label="View all notifications"
+          aria-label="See all notifications"
         >
           See all notifications
         </Link>
