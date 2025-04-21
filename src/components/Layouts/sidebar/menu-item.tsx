@@ -26,7 +26,7 @@ export function MenuItem({
   isActive,
   className,
 }: {
-  href: string;
+  href?: string;
   title: string;
   icon: React.ComponentType<{ className?: string }>;
   isActive: boolean;
@@ -36,7 +36,7 @@ export function MenuItem({
 
   return (
     <Link
-      href={href}
+      href={href || "#"}
       onClick={() => isMobile && toggleSidebar()}
       className={cn(
         menuItemBaseStyles({
