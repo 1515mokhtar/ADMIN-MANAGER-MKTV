@@ -2,11 +2,11 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 // Routes qui nécessitent une authentification
-const protectedRoutes = [];
+const protectedRoutes: string[] = [];
 // Routes qui nécessitent un rôle admin
-const adminRoutes = ['/dashboard'];
+const adminRoutes: string[] = ['/dashboard'];
 // Routes publiques
-const publicRoutes = ['/login', '/profile'];
+const publicRoutes: string[] = ['/login', '/profile'];
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
