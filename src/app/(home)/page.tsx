@@ -1,3 +1,5 @@
+'use client';
+
 import { Suspense } from "react";
 import { OverviewCardsSkeleton } from "./_components/overview-cards/skeleton";
 import { TopChannelsSkeleton } from "@/components/Tables/top-channels/skeleton";
