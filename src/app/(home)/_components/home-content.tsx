@@ -1,59 +1,50 @@
 'use client';
 
-import { Suspense } from "react";
+import { Suspense, lazy } from "react";
 import { TopChannelsSkeleton } from "@/components/Tables/top-channels/skeleton";
 import { RegionLabels } from "./region-labels";
 import { ChatsCard } from "./chats-card";
 import TimeFrameWrapper from "./time-frame-wrapper";
-import dynamicImport from 'next/dynamic';
 
-const PaymentsOverview = dynamicImport(
-  () => import("@/components/Charts/payments-overview").then(mod => mod.PaymentsOverview),
-  { ssr: false, loading: () => <div>Loading...</div> }
-);
-
-const WeeksProfit = dynamicImport(
-  () => import("@/components/Charts/weeks-profit").then(mod => mod.WeeksProfit),
-  { ssr: false, loading: () => <div>Loading...</div> }
-);
-
-const UsedDevices = dynamicImport(
-  () => import("@/components/Charts/used-devices").then(mod => mod.UsedDevices),
-  { ssr: false, loading: () => <div>Loading...</div> }
-);
-
-const TopChannels = dynamicImport(
-  () => import("@/components/Tables/top-channels").then(mod => mod.TopChannels),
-  { ssr: false, loading: () => <TopChannelsSkeleton /> }
-);
+// Lazy load components
+const PaymentsOverview = lazy(() => import("@/components/Charts/payments-overview").then(mod => ({ default: mod.PaymentsOverview })));
+const WeeksProfit = lazy(() => import("@/components/Charts/weeks-profit").then(mod => ({ default: mod.WeeksProfit })));
+const UsedDevices = lazy(() => import("@/components/Charts/used-devices").then(mod => ({ default: mod.UsedDevices })));
+const TopChannels = lazy(() => import("@/components/Tables/top-channels").then(mod => ({ default: mod.TopChannels })));
 
 export default function HomeContent() {
   return (
     <>
       <TimeFrameWrapper sectionKey="payments_overview">
         {(timeFrame) => (
-          <PaymentsOverview
-            className="col-span-12 xl:col-span-7"
-            timeFrame={timeFrame}
-          />
+          <Suspense fallback={<div>Loading...</div>}>
+            <PaymentsOverview
+              className="col-span-12 xl:col-span-7"
+              timeFrame={timeFrame}
+            />
+          </Suspense>
         )}
       </TimeFrameWrapper>
 
       <TimeFrameWrapper sectionKey="weeks_profit">
         {(timeFrame) => (
-          <WeeksProfit
-            timeFrame={timeFrame}
-            className="col-span-12 xl:col-span-5"
-          />
+          <Suspense fallback={<div>Loading...</div>}>
+            <WeeksProfit
+              timeFrame={timeFrame}
+              className="col-span-12 xl:col-span-5"
+            />
+          </Suspense>
         )}
       </TimeFrameWrapper>
 
       <TimeFrameWrapper sectionKey="used_devices">
         {(timeFrame) => (
-          <UsedDevices
-            className="col-span-12 xl:col-span-5"
-            timeFrame={timeFrame}
-          />
+          <Suspense fallback={<div>Loading...</div>}>
+            <UsedDevices
+              className="col-span-12 xl:col-span-5"
+              timeFrame={timeFrame}
+            />
+          </Suspense>
         )}
       </TimeFrameWrapper>
 
