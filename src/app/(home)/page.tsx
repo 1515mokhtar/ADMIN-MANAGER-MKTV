@@ -14,24 +14,25 @@ import dynamicImport from 'next/dynamic';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
+// Client components
 const PaymentsOverview = dynamicImport(
   () => import("@/components/Charts/payments-overview").then(mod => mod.PaymentsOverview),
-  { ssr: false }
+  { ssr: false, loading: () => <div>Loading...</div> }
 );
 
 const WeeksProfit = dynamicImport(
   () => import("@/components/Charts/weeks-profit").then(mod => mod.WeeksProfit),
-  { ssr: false }
+  { ssr: false, loading: () => <div>Loading...</div> }
 );
 
 const UsedDevices = dynamicImport(
   () => import("@/components/Charts/used-devices").then(mod => mod.UsedDevices),
-  { ssr: false }
+  { ssr: false, loading: () => <div>Loading...</div> }
 );
 
 const TopChannels = dynamicImport(
   () => import("@/components/Tables/top-channels").then(mod => mod.TopChannels),
-  { ssr: false }
+  { ssr: false, loading: () => <TopChannelsSkeleton /> }
 );
 
 export default function Home() {
