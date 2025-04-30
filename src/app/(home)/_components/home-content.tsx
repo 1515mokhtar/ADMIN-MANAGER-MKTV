@@ -1,57 +1,73 @@
 'use client';
 
-import { PaymentsOverview } from "@/components/Charts/payments-overview";
-import { UsedDevices } from "@/components/Charts/used-devices";
-import { WeeksProfit } from "@/components/Charts/weeks-profit";
-import { TopChannels } from "@/components/Tables/top-channels";
-import { TopChannelsSkeleton } from "@/components/Tables/top-channels/skeleton";
-import { createTimeFrameExtractor } from "@/utils/timeframe-extractor";
 import { Suspense } from "react";
-import { ChatsCard } from "./chats-card";
-import { OverviewCardsGroup } from "./overview-cards";
+import { TopChannelsSkeleton } from "@/components/Tables/top-channels/skeleton";
 import { RegionLabels } from "./region-labels";
-import { useSearchParams } from "next/navigation";
+import { ChatsCard } from "./chats-card";
+import TimeFrameWrapper from "./time-frame-wrapper";
+import dynamicImport from 'next/dynamic';
+
+const PaymentsOverview = dynamicImport(
+  () => import("@/components/Charts/payments-overview").then(mod => mod.PaymentsOverview),
+  { ssr: false, loading: () => <div>Loading...</div> }
+);
+
+const WeeksProfit = dynamicImport(
+  () => import("@/components/Charts/weeks-profit").then(mod => mod.WeeksProfit),
+  { ssr: false, loading: () => <div>Loading...</div> }
+);
+
+const UsedDevices = dynamicImport(
+  () => import("@/components/Charts/used-devices").then(mod => mod.UsedDevices),
+  { ssr: false, loading: () => <div>Loading...</div> }
+);
+
+const TopChannels = dynamicImport(
+  () => import("@/components/Tables/top-channels").then(mod => mod.TopChannels),
+  { ssr: false, loading: () => <TopChannelsSkeleton /> }
+);
 
 export default function HomeContent() {
-  const searchParams = useSearchParams();
-  const selected_time_frame = searchParams?.get('selected_time_frame');
-  const extractTimeFrame = createTimeFrameExtractor(selected_time_frame || '');
-
   return (
     <>
-      <OverviewCardsGroup />
+      <TimeFrameWrapper sectionKey="payments_overview">
+        {(timeFrame) => (
+          <PaymentsOverview
+            className="col-span-12 xl:col-span-7"
+            timeFrame={timeFrame}
+          />
+        )}
+      </TimeFrameWrapper>
 
-      <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-9 2xl:gap-7.5">
-        <PaymentsOverview
-          className="col-span-12 xl:col-span-7"
-          key={extractTimeFrame("payments_overview")}
-          timeFrame={extractTimeFrame("payments_overview")?.split(":")[1]}
-        />
+      <TimeFrameWrapper sectionKey="weeks_profit">
+        {(timeFrame) => (
+          <WeeksProfit
+            timeFrame={timeFrame}
+            className="col-span-12 xl:col-span-5"
+          />
+        )}
+      </TimeFrameWrapper>
 
-        <WeeksProfit
-          key={extractTimeFrame("weeks_profit")}
-          timeFrame={extractTimeFrame("weeks_profit")?.split(":")[1]}
-          className="col-span-12 xl:col-span-5"
-        />
+      <TimeFrameWrapper sectionKey="used_devices">
+        {(timeFrame) => (
+          <UsedDevices
+            className="col-span-12 xl:col-span-5"
+            timeFrame={timeFrame}
+          />
+        )}
+      </TimeFrameWrapper>
 
-        <UsedDevices
-          className="col-span-12 xl:col-span-5"
-          key={extractTimeFrame("used_devices")}
-          timeFrame={extractTimeFrame("used_devices")?.split(":")[1]}
-        />
+      <RegionLabels />
 
-        <RegionLabels />
-
-        <div className="col-span-12 grid xl:col-span-8">
-          <Suspense fallback={<TopChannelsSkeleton />}>
-            <TopChannels />
-          </Suspense>
-        </div>
-
-        <Suspense fallback={null}>
-          <ChatsCard />
+      <div className="col-span-12 grid xl:col-span-8">
+        <Suspense fallback={<TopChannelsSkeleton />}>
+          <TopChannels />
         </Suspense>
       </div>
+
+      <Suspense fallback={null}>
+        <ChatsCard />
+      </Suspense>
     </>
   );
 } 
