@@ -5,8 +5,9 @@ const nextConfig = {
   images: {
     domains: ['images.unsplash.com', 'lh3.googleusercontent.com'],
   },
-  // Configure dynamic routes and disable static optimization for pages using Firebase
-  output: 'standalone',
+  // Configure for Vercel deployment
+  output: 'export',
+  distDir: '.next',
   experimental: {
     // Enable app directory features
     appDir: true,
