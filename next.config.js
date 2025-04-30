@@ -5,9 +5,6 @@ const nextConfig = {
   images: {
     domains: ['images.unsplash.com', 'lh3.googleusercontent.com'],
   },
-  experimental: {
-    serverComponentsExternalPackages: [],
-  },
   webpack: (config, { isServer }) => {
     if (!isServer) {
       config.resolve.fallback = {
