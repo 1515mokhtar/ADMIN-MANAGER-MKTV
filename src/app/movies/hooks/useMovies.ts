@@ -9,7 +9,10 @@ export function useMovies() {
   const [movies, setMovies] = useState<Movie[]>([]);
 
   useEffect(() => {
-    const q = query(collection(db, "movies"), orderBy("title"));
+    const firestoreDb = db();
+    if (!firestoreDb) return;
+    
+    const q = query(collection(firestoreDb, "movies"), orderBy("title"));
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const moviesData = snapshot.docs.map((doc) => ({
         id: doc.id,
@@ -23,8 +26,11 @@ export function useMovies() {
 
   const addMovie = async (movieData: MovieFormData) => {
     try {
+      const firestoreDb = db();
+      if (!firestoreDb) throw new Error("Firestore not initialized");
+      
       const movieId = movieData.movieId;
-      const movieRef = doc(db, "movies", movieId);
+      const movieRef = doc(firestoreDb, "movies", movieId);
       
       const { movieId: _, ...dataToStore } = movieData;
       
@@ -37,8 +43,11 @@ export function useMovies() {
 
   const updateMovie = async (id: string, movieData: MovieFormData) => {
     try {
+      const firestoreDb = db();
+      if (!firestoreDb) throw new Error("Firestore not initialized");
+      
       console.log("Updating movie with data:", movieData);
-      const movieRef = doc(db, "movies", id);
+      const movieRef = doc(firestoreDb, "movies", id);
       
       // Remove movieId from the data to be updated
       const { movieId, ...dataToUpdate } = movieData;
@@ -52,7 +61,10 @@ export function useMovies() {
 
   const deleteMovie = async (id: string) => {
     try {
-      const movieRef = doc(db, "movies", id);
+      const firestoreDb = db();
+      if (!firestoreDb) throw new Error("Firestore not initialized");
+      
+      const movieRef = doc(firestoreDb, "movies", id);
       await deleteDoc(movieRef);
     } catch (error) {
       console.error("Error deleting movie:", error);

@@ -5,11 +5,11 @@ const nextConfig = {
   images: {
     domains: ['images.unsplash.com', 'lh3.googleusercontent.com'],
   },
-  // Disable static page generation for pages that use Firebase
+  // Configure dynamic routes and disable static optimization for pages using Firebase
+  output: 'standalone',
   experimental: {
-    // This will make all pages dynamic by default
-    // Pages that don't use Firebase can still be static by using getStaticProps
-    isrMemoryCacheSize: 0,
+    // Enable app directory features
+    appDir: true,
   },
 };
 

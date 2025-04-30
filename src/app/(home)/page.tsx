@@ -1,3 +1,5 @@
+'use client';
+
 import { PaymentsOverview } from "@/components/Charts/payments-overview";
 import { UsedDevices } from "@/components/Charts/used-devices";
 import { WeeksProfit } from "@/components/Charts/weeks-profit";
@@ -10,16 +12,12 @@ import { OverviewCardsGroup } from "./_components/overview-cards";
 import { OverviewCardsSkeleton } from "./_components/overview-cards/skeleton";
 import { RegionLabels } from "./_components/region-labels";
 import ProtectedRoute from "@/components/Auth/ProtectedRoute";
+import { useSearchParams } from "next/navigation";
 
-type PropsType = {
-  searchParams: Promise<{
-    selected_time_frame?: string;
-  }>;
-};
-
-export default async function Home({ searchParams }: PropsType) {
-  const { selected_time_frame } = await searchParams;
-  const extractTimeFrame = createTimeFrameExtractor(selected_time_frame);
+export default function Home() {
+  const searchParams = useSearchParams();
+  const selected_time_frame = searchParams?.get('selected_time_frame');
+  const extractTimeFrame = createTimeFrameExtractor(selected_time_frame || '');
 
   return (
     <ProtectedRoute>

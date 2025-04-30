@@ -1,161 +1,115 @@
 "use client";
 
-import { useAuth } from '@/contexts/auth-context';
-import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import Image from "next/image";
-import { useState, useEffect, useRef } from "react";
-import { CameraIcon } from "./_components/icons";
-import { SocialAccounts } from "./_components/social-accounts";
-import { useRouter } from 'next/navigation';
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
+import { useState, useEffect } from "react";
+import { useAuth } from "@/contexts/auth-context";
+import { doc, getDoc, updateDoc, DocumentData } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import InputGroup from "@/components/FormElements/InputGroup";
+import { Button } from "@/components/ui/button";
+import { toast } from "react-hot-toast";
+
+interface ProfileData {
+  displayName: string;
+  email: string;
+  phoneNumber: string;
+}
 
 export default function ProfilePage() {
-  const { user, userData, logout } = useAuth();
-  const router = useRouter();
-  const [isLoggingOut, setIsLoggingOut] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [profileData, setProfileData] = useState<any>(null);
-  const activeElementRef = useRef<HTMLElement | null>(null);
+  const { user } = useAuth();
+  const [profileData, setProfileData] = useState<ProfileData>({
+    displayName: "",
+    email: "",
+    phoneNumber: "",
+  });
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchProfile = async () => {
       if (user?.uid) {
         try {
-          const userDoc = await getDoc(doc(db, "users", user.uid));
+          const firestoreDb = db();
+          if (!firestoreDb) return;
+          
+          const userDoc = await getDoc(doc(firestoreDb, "users", user.uid));
           if (userDoc.exists()) {
-            setProfileData(userDoc.data());
+            const data = userDoc.data() as DocumentData;
+            setProfileData({
+              displayName: data.displayName || "",
+              email: data.email || "",
+              phoneNumber: data.phoneNumber || "",
+            });
           }
         } catch (error) {
-          console.error("Erreur lors du chargement des données:", error);
-        } finally {
-          setLoading(false);
+          console.error("Error fetching profile:", error);
+          toast.error("Failed to load profile data");
         }
-      } else {
-        setLoading(false);
       }
     };
 
-    fetchUserData();
+    fetchProfile();
   }, [user]);
 
-  const handleLogout = async () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!user?.uid) return;
+
+    setIsLoading(true);
     try {
-      setIsLoggingOut(true);
-      await logout();
+      const firestoreDb = db();
+      if (!firestoreDb) throw new Error("Firestore not initialized");
+      
+      // Convert ProfileData to a plain object for Firestore
+      const dataToUpdate = {
+        displayName: profileData.displayName,
+        email: profileData.email,
+        phoneNumber: profileData.phoneNumber,
+      };
+      
+      await updateDoc(doc(firestoreDb, "users", user.uid), dataToUpdate);
+      toast.success("Profile updated successfully");
     } catch (error) {
-      console.error('Erreur lors de la déconnexion:', error);
-      setIsLoggingOut(false);
+      console.error("Error updating profile:", error);
+      toast.error("Failed to update profile");
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  if (loading) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <div className="h-32 w-32 animate-spin rounded-full border-b-2 border-t-2 border-primary"></div>
-      </div>
-    );
-  }
-
-  // Si l'utilisateur n'est pas connecté, afficher un message
-  if (!user) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="mx-auto max-w-2xl">
-          <h1 className="mb-8 text-3xl font-bold">Profil utilisateur</h1>
-          <div className="rounded-lg bg-white p-6 shadow-lg">
-            <div className="text-center">
-              <h2 className="mb-4 text-xl font-semibold">Vous n&apos;êtes pas connecté</h2>
-              <p className="mb-6 text-gray-600">Veuillez vous connecter pour accéder à votre profil.</p>
-              <button
-                onClick={() => router.push('/login')}
-                className="rounded bg-primary px-4 py-2 text-white hover:bg-primary/90"
-              >
-                Se connecter
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="mx-auto max-w-2xl">
-        <h1 className="mb-8 text-3xl font-bold">Profil utilisateur</h1>
-
-        <div className="rounded-lg bg-white p-6 shadow-lg">
-          {/* Section Photo de Profil */}
-          <div className="mb-8 flex flex-col items-center">
-            <div className="relative h-32 w-32 overflow-hidden rounded-full bg-gray-200">
-              {profileData?.photoURL ? (
-                <Image
-                  src={profileData.photoURL}
-                  alt="Photo de profil"
-                  fill
-                  className="object-cover"
-                />
-              ) : (
-                <div className="flex h-full w-full items-center justify-center bg-primary text-4xl text-white">
-                  {profileData?.name?.[0]?.toUpperCase() || user?.email?.[0]?.toUpperCase() || '?'}
-                </div>
-              )}
-              <button 
-                className="absolute bottom-0 right-0 rounded-full bg-white p-1 shadow-lg"
-                title="Changer la photo de profil"
-              >
-                <CameraIcon className="h-5 w-5 text-gray-600" />
-              </button>
-            </div>
-            <h2 className="mt-4 text-2xl font-bold">{profileData?.name || user?.email?.split('@')[0] || 'Utilisateur'}</h2>
-            <p className="text-gray-600">{profileData?.role || 'Administrateur'}</p>
-          </div>
-
-          {/* Informations personnelles */}
-          <div className="mb-6">
-            <h2 className="mb-4 text-xl font-semibold">Informations personnelles</h2>
-            <div className="grid gap-4 md:grid-cols-2">
-              <div className="space-y-2">
-                <p className="rounded-lg bg-gray-50 p-3">
-                  <span className="block text-sm font-medium text-gray-500">Email</span>
-                  <span className="text-gray-900">{user?.email}</span>
-                </p>
-                {profileData?.phone && (
-                  <p className="rounded-lg bg-gray-50 p-3">
-                    <span className="block text-sm font-medium text-gray-500">Téléphone</span>
-                    <span className="text-gray-900">{profileData.phone}</span>
-                  </p>
-                )}
-              </div>
-              <div className="space-y-2">
-                <p className="rounded-lg bg-gray-50 p-3">
-                  <span className="block text-sm font-medium text-gray-500">Dernière connexion</span>
-                  <span className="text-gray-900">
-                    {user?.metadata.lastSignInTime
-                      ? new Date(user.metadata.lastSignInTime).toLocaleString()
-                      : 'Non disponible'}
-                  </span>
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Actions */}
-          <div className="border-t pt-6">
-            <h2 className="mb-4 text-xl font-semibold">Actions</h2>
-            <div className="space-y-2">
-              <button
-                onClick={handleLogout}
-                disabled={isLoggingOut}
-                className="w-full rounded bg-red-600 px-4 py-2 text-white hover:bg-red-700 disabled:opacity-50"
-              >
-                {isLoggingOut ? 'Déconnexion en cours...' : 'Se déconnecter'}
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-6">Profile Settings</h1>
+      <form onSubmit={handleSubmit} className="max-w-md space-y-4">
+        <InputGroup
+          label="Display Name"
+          type="text"
+          placeholder="Enter your display name"
+          value={profileData.displayName}
+          handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setProfileData({ ...profileData, displayName: e.target.value })
+          }
+        />
+        <InputGroup
+          label="Email"
+          type="email"
+          placeholder="Enter your email"
+          value={profileData.email}
+          handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setProfileData({ ...profileData, email: e.target.value })
+          }
+        />
+        <InputGroup
+          label="Phone Number"
+          type="tel"
+          placeholder="Enter your phone number"
+          value={profileData.phoneNumber}
+          handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setProfileData({ ...profileData, phoneNumber: e.target.value })
+          }
+        />
+        <Button type="submit" disabled={isLoading}>
+          {isLoading ? "Updating..." : "Update Profile"}
+        </Button>
+      </form>
     </div>
   );
 }
