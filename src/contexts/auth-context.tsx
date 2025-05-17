@@ -23,18 +23,7 @@ interface AuthContextType {
   resetPassword: (email: string) => Promise<void>;
 }
 
-const AuthContext = createContext<AuthContextType>({
-  user: null,
-  loading: true,
-  isAdmin: false,
-  error: null,
-  userData: null,
-  signIn: async () => {},
-  logout: async () => {},
-  resetPassword: async () => {},
-});
-
-export const useAuth = () => useContext(AuthContext);
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 interface AuthProviderProps {
   children: React.ReactNode;
@@ -57,6 +46,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     const auth = getFirebaseAuth();
     if (!auth) {
       console.error("Firebase Auth not initialized");
+      setError("Firebase Auth not initialized. Please check your internet connection and try again.");
       setLoading(false);
       return;
     }
@@ -68,9 +58,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
           if (!db) {
             throw new Error("Firestore not initialized");
           }
-
-          // Add a small delay to ensure emulator is ready
-          await new Promise(resolve => setTimeout(resolve, 1000));
 
           const userDoc = await getDoc(doc(db, "users", currentUser.uid));
           
@@ -88,9 +75,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
           setIsAdmin(isUserAdmin);
           setUser(currentUser);
           setUserData(userData);
-        } catch (error) {
+          setError(null);
+        } catch (error: any) {
           console.error("Error fetching user data:", error);
-          setError("Failed to fetch user data. Please try again later.");
+          if (error.code === 'network-request-failed') {
+            setError("Network error. Please check your internet connection and try again.");
+          } else {
+            setError("Failed to fetch user data. Please try again later.");
+          }
           setUserData(null);
           setIsAdmin(false);
         }
@@ -98,6 +90,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         setUser(null);
         setIsAdmin(false);
         setUserData(null);
+        setError(null);
       }
       setLoading(false);
     });
@@ -121,9 +114,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
       setError(null);
       setLoading(true);
       
-      // Add a small delay to ensure emulator is ready
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
       
@@ -131,9 +121,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
       if (!db) {
         throw new Error("Firestore not initialized. Please check your internet connection and try again.");
       }
-
-      // Add a small delay to ensure emulator is ready
-      await new Promise(resolve => setTimeout(resolve, 1000));
 
       const userDoc = await getDoc(doc(db, "users", user.uid));
       
@@ -155,7 +142,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
     } catch (error: any) {
       console.error("Login error:", error);
       
-      // Handle specific error cases
       if (error.code === 'auth/network-request-failed') {
         setError("Network error. Please check your internet connection and try again.");
       } else if (error.code === 'auth/invalid-email') {
@@ -184,10 +170,15 @@ export function AuthProvider({ children }: AuthProviderProps) {
       setUser(null);
       setIsAdmin(false);
       setUserData(null);
+      setError(null);
       router.push("/login");
-    } catch (error) {
+    } catch (error: any) {
       console.error("Logout error:", error);
-      setError("Failed to sign out");
+      if (error.code === 'network-request-failed') {
+        setError("Network error. Please check your internet connection and try again.");
+      } else {
+        setError("Failed to sign out");
+      }
     } finally {
       setLoading(false);
     }
@@ -206,7 +197,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
       setError(null);
     } catch (error: any) {
       console.error("Password reset error:", error);
-      setError(error.message || "Failed to reset password");
+      if (error.code === 'network-request-failed') {
+        setError("Network error. Please check your internet connection and try again.");
+      } else {
+        setError(error.message || "Failed to reset password");
+      }
     } finally {
       setLoading(false);
     }
@@ -225,3 +220,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
+};

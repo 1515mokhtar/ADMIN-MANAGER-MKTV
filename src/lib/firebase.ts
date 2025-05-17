@@ -2,8 +2,8 @@
 // Firebase will be initialized only on the client side
 
 import { initializeApp, getApps, getApp, FirebaseApp } from 'firebase/app';
-import { getAuth, Auth, connectAuthEmulator } from 'firebase/auth';
-import { getFirestore, Firestore, connectFirestoreEmulator } from 'firebase/firestore';
+import { getAuth, Auth } from 'firebase/auth';
+import { getFirestore, Firestore } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -14,40 +14,77 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
+// Debug log to check environment variables
+console.log('Firebase Config:', {
+  hasApiKey: !!process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  hasAuthDomain: !!process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  hasProjectId: !!process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  hasStorageBucket: !!process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  hasMessagingSenderId: !!process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  hasAppId: !!process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+});
+
+// Check if all required config values are present
+const isConfigValid = Object.values(firebaseConfig).every(value => value !== undefined && value !== '');
+if (!isConfigValid) {
+  console.error('Firebase configuration is incomplete. Please check your .env.local file.');
+}
+
 let firebaseApp: FirebaseApp | null = null;
 let firebaseAuth: Auth | null = null;
 let firebaseDb: Firestore | null = null;
 
 export const initFirebase = () => {
-  if (typeof window === 'undefined') return null;
+  if (typeof window === 'undefined') {
+    console.log('Running on server side, skipping Firebase initialization');
+    return null;
+  }
+
+  // Check network connectivity
+  if (!navigator.onLine) {
+    console.error('No internet connection available');
+    return null;
+  }
   
   try {
     if (!firebaseApp) {
-      firebaseApp = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-      firebaseAuth = getAuth(firebaseApp);
-      firebaseDb = getFirestore(firebaseApp);
-
-      // Connect to emulators if in development
-      if (process.env.NODE_ENV === 'development') {
-        try {
-          // Use localhost instead of 127.0.0.1 for better compatibility
-          if (firebaseAuth) {
-            connectAuthEmulator(firebaseAuth, 'http://localhost:9099', { disableWarnings: true });
-            console.log('Auth emulator connected');
-          }
-          if (firebaseDb) {
-            connectFirestoreEmulator(firebaseDb, 'localhost', 8080);
-            console.log('Firestore emulator connected');
-          }
-        } catch (emulatorError) {
-          console.error('Error connecting to emulators:', emulatorError);
-        }
+      console.log('Initializing Firebase...');
+      
+      // Validate config before initialization
+      if (!isConfigValid) {
+        throw new Error('Invalid Firebase configuration');
       }
+
+      firebaseApp = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+      console.log('Firebase app initialized');
+
+      firebaseAuth = getAuth(firebaseApp);
+      console.log('Firebase Auth initialized');
+
+      firebaseDb = getFirestore(firebaseApp);
+      console.log('Firestore initialized');
+
+      // Add network state change listener
+      window.addEventListener('online', () => {
+        console.log('Network connection restored');
+        // Reinitialize Firebase if needed
+        if (!firebaseApp) {
+          initFirebase();
+        }
+      });
+
+      window.addEventListener('offline', () => {
+        console.log('Network connection lost');
+      });
     }
     
     return { app: firebaseApp, auth: firebaseAuth, db: firebaseDb };
   } catch (error) {
     console.error('Firebase initialization error:', error);
+    // Reset Firebase instances on error
+    firebaseApp = null;
+    firebaseAuth = null;
+    firebaseDb = null;
     return null;
   }
 };
