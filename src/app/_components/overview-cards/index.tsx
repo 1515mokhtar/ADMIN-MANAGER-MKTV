@@ -32,7 +32,7 @@ export async function OverviewCardsGroup() {
           ...products,
           value: compactFormat(products.value),
         }}
-        Icon={icons.Products}
+        Icon={icons.Product}
       />
 
       <OverviewCard

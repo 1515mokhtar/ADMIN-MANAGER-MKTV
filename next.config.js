@@ -2,6 +2,8 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  staticPageGenerationTimeout: 120,
+  output: 'standalone',
   images: {
     domains: ['images.unsplash.com', 'lh3.googleusercontent.com'],
   },
@@ -14,6 +16,9 @@ const nextConfig = {
       };
     }
     return config;
+  },
+  experimental: {
+    optimizePackageImports: ['@heroicons/react', 'react-leaflet'],
   },
 };
 

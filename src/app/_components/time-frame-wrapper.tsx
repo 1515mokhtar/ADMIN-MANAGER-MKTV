@@ -3,15 +3,15 @@
 import React from 'react';
 import { useSearchParams } from "next/navigation";
 import { createTimeFrameExtractor } from "@/utils/timeframe-extractor";
-import { ReactNode } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 interface TimeFrameWrapperProps {
   children: React.ReactNode;
+  sectionKey: string;
   onTimeFrameChange?: (value: string) => void;
 }
 
-export function TimeFrameWrapper({ children, onTimeFrameChange }: TimeFrameWrapperProps) {
+export function TimeFrameWrapper({ children, sectionKey, onTimeFrameChange }: TimeFrameWrapperProps) {
   const searchParams = useSearchParams();
   const selected_time_frame = searchParams?.get('selected_time_frame');
   const extractTimeFrame = createTimeFrameExtractor(selected_time_frame || '');
