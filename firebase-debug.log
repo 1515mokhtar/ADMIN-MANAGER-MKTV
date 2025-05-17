@@ -1,0 +1,162 @@
+[debug] [2025-04-30T01:24:37.974Z] ----------------------------------------------------------------------
+[debug] [2025-04-30T01:24:37.977Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\MR TECHNOLOGIES\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init --project movis-app
+[debug] [2025-04-30T01:24:37.978Z] CLI Version:   14.2.1
+[debug] [2025-04-30T01:24:37.978Z] Platform:      win32
+[debug] [2025-04-30T01:24:37.978Z] Node Version:  v22.14.0
+[debug] [2025-04-30T01:24:37.978Z] Time:          Wed Apr 30 2025 02:24:37 GMT+0100 (UTC+01:00)
+[debug] [2025-04-30T01:24:37.978Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-04-30T01:24:37.985Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-04-30T01:24:37.986Z] > authorizing via signed-in user (mokhtar.benmoussa18@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\MR TECHNOLOGIES\Desktop\projects next\movie-website\MKTV-admin-dashboard-main
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2025-04-30T01:25:58.945Z] Using project from CLI flag: movis-app
+[debug] [2025-04-30T01:25:58.947Z] Checked if tokens are valid: false, expires at: 1721901159978
+[debug] [2025-04-30T01:25:58.947Z] Checked if tokens are valid: false, expires at: 1721901159978
+[debug] [2025-04-30T01:25:58.948Z] > refreshing access token with scopes: []
+[debug] [2025-04-30T01:25:58.951Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-04-30T01:25:58.951Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-04-30T01:25:59.177Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 400
+[debug] [2025-04-30T01:25:59.178Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-04-30T01:25:59.178Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/movis-app [none]
+[debug] [2025-04-30T01:25:59.336Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/movis-app 401
+[debug] [2025-04-30T01:25:59.337Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/movis-app {"error":{"code":401,"message":"Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.","status":"UNAUTHENTICATED"}}
+[debug] [2025-04-30T01:25:59.337Z] Got a 401 Unauthenticated error for a call that required authentication. Refreshing tokens.
+[debug] [2025-04-30T01:25:59.337Z] Checked if tokens are valid: false, expires at: 1721901159978
+[debug] [2025-04-30T01:25:59.337Z] Checked if tokens are valid: false, expires at: 1721901159978
+[debug] [2025-04-30T01:25:59.337Z] > refreshing access token with scopes: []
+[debug] [2025-04-30T01:25:59.338Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-04-30T01:25:59.338Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-04-30T01:25:59.398Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 400
+[debug] [2025-04-30T01:25:59.398Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-04-30T01:25:59.400Z] Request to https://firebase.googleapis.com/v1beta1/projects/movis-app had HTTP Error: 401, Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.
+[debug] [2025-04-30T01:25:59.402Z] FirebaseError: Request to https://firebase.googleapis.com/v1beta1/projects/movis-app had HTTP Error: 401, Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.
+    at responseToError (C:\Users\MR TECHNOLOGIES\AppData\Roaming\npm\node_modules\firebase-tools\lib\responseToError.js:52:12)
+    at RetryOperation._fn (C:\Users\MR TECHNOLOGIES\AppData\Roaming\npm\node_modules\firebase-tools\lib\apiv2.js:312:77)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[error] 
+[error] Error: Failed to get Firebase project movis-app. Please make sure the project exists and your account has permission to access it.
+[debug] [2025-04-30T01:26:11.291Z] ----------------------------------------------------------------------
+[debug] [2025-04-30T01:26:11.293Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\MR TECHNOLOGIES\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init --project movis-app
+[debug] [2025-04-30T01:26:11.293Z] CLI Version:   14.2.1
+[debug] [2025-04-30T01:26:11.293Z] Platform:      win32
+[debug] [2025-04-30T01:26:11.293Z] Node Version:  v22.14.0
+[debug] [2025-04-30T01:26:11.294Z] Time:          Wed Apr 30 2025 02:26:11 GMT+0100 (UTC+01:00)
+[debug] [2025-04-30T01:26:11.294Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-04-30T01:26:11.299Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-04-30T01:26:11.299Z] > authorizing via signed-in user (mokhtar.benmoussa18@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\MR TECHNOLOGIES\Desktop\projects next\movie-website\MKTV-admin-dashboard-main
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2025-04-30T01:26:37.734Z] Using project from CLI flag: movis-app
+[debug] [2025-04-30T01:26:37.735Z] Checked if tokens are valid: false, expires at: 1721901159978
+[debug] [2025-04-30T01:26:37.736Z] Checked if tokens are valid: false, expires at: 1721901159978
+[debug] [2025-04-30T01:26:37.736Z] > refreshing access token with scopes: []
+[debug] [2025-04-30T01:26:37.739Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-04-30T01:26:37.739Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-04-30T01:26:37.990Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 400
+[debug] [2025-04-30T01:26:37.991Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-04-30T01:26:37.991Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/movis-app [none]
+[debug] [2025-04-30T01:26:38.140Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/movis-app 401
+[debug] [2025-04-30T01:26:38.140Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/movis-app {"error":{"code":401,"message":"Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.","status":"UNAUTHENTICATED"}}
+[debug] [2025-04-30T01:26:38.140Z] Got a 401 Unauthenticated error for a call that required authentication. Refreshing tokens.
+[debug] [2025-04-30T01:26:38.140Z] Checked if tokens are valid: false, expires at: 1721901159978
+[debug] [2025-04-30T01:26:38.141Z] Checked if tokens are valid: false, expires at: 1721901159978
+[debug] [2025-04-30T01:26:38.141Z] > refreshing access token with scopes: []
+[debug] [2025-04-30T01:26:38.142Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-04-30T01:26:38.142Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-04-30T01:26:38.212Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 400
+[debug] [2025-04-30T01:26:38.212Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-04-30T01:26:38.214Z] Request to https://firebase.googleapis.com/v1beta1/projects/movis-app had HTTP Error: 401, Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.
+[debug] [2025-04-30T01:26:38.216Z] FirebaseError: Request to https://firebase.googleapis.com/v1beta1/projects/movis-app had HTTP Error: 401, Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.
+    at responseToError (C:\Users\MR TECHNOLOGIES\AppData\Roaming\npm\node_modules\firebase-tools\lib\responseToError.js:52:12)
+    at RetryOperation._fn (C:\Users\MR TECHNOLOGIES\AppData\Roaming\npm\node_modules\firebase-tools\lib\apiv2.js:312:77)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[error] 
+[error] Error: Failed to get Firebase project movis-app. Please make sure the project exists and your account has permission to access it.
+[debug] [2025-04-30T01:27:18.830Z] ----------------------------------------------------------------------
+[debug] [2025-04-30T01:27:18.833Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\MR TECHNOLOGIES\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init --project movis-app-e3f24
+[debug] [2025-04-30T01:27:18.834Z] CLI Version:   14.2.1
+[debug] [2025-04-30T01:27:18.834Z] Platform:      win32
+[debug] [2025-04-30T01:27:18.835Z] Node Version:  v22.14.0
+[debug] [2025-04-30T01:27:18.835Z] Time:          Wed Apr 30 2025 02:27:18 GMT+0100 (UTC+01:00)
+[debug] [2025-04-30T01:27:18.835Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-04-30T01:27:18.844Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-04-30T01:27:18.844Z] > authorizing via signed-in user (mokhtar.benmoussa18@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\MR TECHNOLOGIES\Desktop\projects next\movie-website\MKTV-admin-dashboard-main
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2025-04-30T01:28:07.354Z] Using project from CLI flag: movis-app-e3f24
+[debug] [2025-04-30T01:28:07.355Z] Checked if tokens are valid: false, expires at: 1721901159978
+[debug] [2025-04-30T01:28:07.356Z] Checked if tokens are valid: false, expires at: 1721901159978
+[debug] [2025-04-30T01:28:07.356Z] > refreshing access token with scopes: []
+[debug] [2025-04-30T01:28:07.359Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-04-30T01:28:07.359Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-04-30T01:28:07.567Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 400
+[debug] [2025-04-30T01:28:07.567Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-04-30T01:28:07.569Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/movis-app-e3f24 [none]
+[debug] [2025-04-30T01:28:07.711Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/movis-app-e3f24 401
+[debug] [2025-04-30T01:28:07.712Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/movis-app-e3f24 {"error":{"code":401,"message":"Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.","status":"UNAUTHENTICATED"}}
+[debug] [2025-04-30T01:28:07.712Z] Got a 401 Unauthenticated error for a call that required authentication. Refreshing tokens.
+[debug] [2025-04-30T01:28:07.712Z] Checked if tokens are valid: false, expires at: 1721901159978
+[debug] [2025-04-30T01:28:07.712Z] Checked if tokens are valid: false, expires at: 1721901159978
+[debug] [2025-04-30T01:28:07.712Z] > refreshing access token with scopes: []
+[debug] [2025-04-30T01:28:07.713Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-04-30T01:28:07.714Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-04-30T01:28:07.774Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 400
+[debug] [2025-04-30T01:28:07.774Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-04-30T01:28:07.776Z] Request to https://firebase.googleapis.com/v1beta1/projects/movis-app-e3f24 had HTTP Error: 401, Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.
+[debug] [2025-04-30T01:28:07.778Z] FirebaseError: Request to https://firebase.googleapis.com/v1beta1/projects/movis-app-e3f24 had HTTP Error: 401, Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.
+    at responseToError (C:\Users\MR TECHNOLOGIES\AppData\Roaming\npm\node_modules\firebase-tools\lib\responseToError.js:52:12)
+    at RetryOperation._fn (C:\Users\MR TECHNOLOGIES\AppData\Roaming\npm\node_modules\firebase-tools\lib\apiv2.js:312:77)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[error] 
+[error] Error: Failed to get Firebase project movis-app-e3f24. Please make sure the project exists and your account has permission to access it.

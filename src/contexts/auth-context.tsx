@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { auth, db } from "@/lib/firebase";
+import { getFirebaseAuth, getFirebaseDb } from "@/lib/firebase";
 import { 
   User, 
   onAuthStateChanged, 
@@ -49,37 +49,56 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const router = useRouter();
 
   useEffect(() => {
-    const firebaseAuth = auth();
-    if (!firebaseAuth) return;
-    
-    const unsubscribe = onAuthStateChanged(firebaseAuth, async (currentUser) => {
-      setLoading(true);
-      
+    if (typeof window === 'undefined') {
+      setLoading(false);
+      return;
+    }
+
+    const auth = getFirebaseAuth();
+    if (!auth) {
+      console.error("Firebase Auth not initialized");
+      setLoading(false);
+      return;
+    }
+
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
         try {
-          const firestoreDb = db();
-          if (!firestoreDb) return;
+          const db = getFirebaseDb();
+          if (!db) {
+            throw new Error("Firestore not initialized");
+          }
+
+          // Add a small delay to ensure emulator is ready
+          await new Promise(resolve => setTimeout(resolve, 1000));
+
+          const userDoc = await getDoc(doc(db, "users", currentUser.uid));
           
-          const userDoc = await getDoc(doc(firestoreDb, "users", currentUser.uid));
-          const role = userDoc.data()?.role?.trim();
+          if (!userDoc.exists()) {
+            console.warn("User document not found in Firestore");
+            setUserData(null);
+            setIsAdmin(false);
+            return;
+          }
+
+          const userData = userDoc.data();
+          const role = userData?.role?.trim();
           
-          const isUserAdmin = userDoc.exists() && role === "admin";
+          const isUserAdmin = role === "admin";
           setIsAdmin(isUserAdmin);
           setUser(currentUser);
-          
-          if (userDoc.exists()) {
-            setUserData(userDoc.data());
-          }
+          setUserData(userData);
         } catch (error) {
           console.error("Error fetching user data:", error);
-          setError("Failed to fetch user data");
+          setError("Failed to fetch user data. Please try again later.");
+          setUserData(null);
+          setIsAdmin(false);
         }
       } else {
         setUser(null);
         setIsAdmin(false);
         setUserData(null);
       }
-      
       setLoading(false);
     });
 
@@ -94,22 +113,38 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const signIn = async (email: string, password: string) => {
     try {
+      const auth = getFirebaseAuth();
+      if (!auth) {
+        throw new Error("Firebase Auth not initialized. Please check your internet connection and try again.");
+      }
+
       setError(null);
       setLoading(true);
       
-      const firebaseAuth = auth();
-      if (!firebaseAuth) throw new Error("Firebase Auth not initialized");
+      // Add a small delay to ensure emulator is ready
+      await new Promise(resolve => setTimeout(resolve, 1000));
       
-      const userCredential = await signInWithEmailAndPassword(firebaseAuth, email, password);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
       
-      const firestoreDb = db();
-      if (!firestoreDb) throw new Error("Firestore not initialized");
+      const db = getFirebaseDb();
+      if (!db) {
+        throw new Error("Firestore not initialized. Please check your internet connection and try again.");
+      }
+
+      // Add a small delay to ensure emulator is ready
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      const userDoc = await getDoc(doc(db, "users", user.uid));
       
-      const userDoc = await getDoc(doc(firestoreDb, "users", user.uid));
-      const role = userDoc.data()?.role?.trim();
+      if (!userDoc.exists()) {
+        throw new Error("User document not found. Please contact support.");
+      }
+
+      const userData = userDoc.data();
+      const role = userData?.role?.trim();
       
-      const isUserAdmin = userDoc.exists() && role === "admin";
+      const isUserAdmin = role === "admin";
       
       if (!isUserAdmin) {
         await handleNonAdminUser();
@@ -119,7 +154,19 @@ export function AuthProvider({ children }: AuthProviderProps) {
       router.push("/dashboard");
     } catch (error: any) {
       console.error("Login error:", error);
-      setError(error.message || "Failed to sign in");
+      
+      // Handle specific error cases
+      if (error.code === 'auth/network-request-failed') {
+        setError("Network error. Please check your internet connection and try again.");
+      } else if (error.code === 'auth/invalid-email') {
+        setError("Invalid email address. Please check and try again.");
+      } else if (error.code === 'auth/wrong-password') {
+        setError("Incorrect password. Please try again.");
+      } else if (error.code === 'auth/user-not-found') {
+        setError("No account found with this email. Please check and try again.");
+      } else {
+        setError(error.message || "Failed to sign in. Please try again later.");
+      }
     } finally {
       setLoading(false);
     }
@@ -127,12 +174,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const logout = async () => {
     try {
+      const auth = getFirebaseAuth();
+      if (!auth) {
+        throw new Error("Firebase Auth not initialized");
+      }
+
       setLoading(true);
-      
-      const firebaseAuth = auth();
-      if (!firebaseAuth) throw new Error("Firebase Auth not initialized");
-      
-      await signOut(firebaseAuth);
+      await signOut(auth);
       setUser(null);
       setIsAdmin(false);
       setUserData(null);
@@ -147,13 +195,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const resetPassword = async (email: string) => {
     try {
+      const auth = getFirebaseAuth();
+      if (!auth) {
+        throw new Error("Firebase Auth not initialized");
+      }
+
       setError(null);
       setLoading(true);
-      
-      const firebaseAuth = auth();
-      if (!firebaseAuth) throw new Error("Firebase Auth not initialized");
-      
-      await sendPasswordResetEmail(firebaseAuth, email);
+      await sendPasswordResetEmail(auth, email);
       setError(null);
     } catch (error: any) {
       console.error("Password reset error:", error);
