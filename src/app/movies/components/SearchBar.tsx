@@ -12,7 +12,7 @@ export function SearchBar({ onSearch, mode, setMode }: SearchBarProps) {
   return (
     <div className="flex gap-2 items-center mb-6">
       <input
-        className="flex-1 rounded-lg px-4 py-2 bg-white/20 dark:bg-black/40 text-white placeholder-gray-400 border border-[#ce392b] focus:ring-2 focus:ring-[#ce392b] transition"
+        className="flex-1 rounded-lg px-4 py-2 bg-white text-black placeholder-gray-500 border border-gray-300 focus:ring-2 focus:ring-[#ce392b] transition dark:bg-black/40 dark:text-white dark:placeholder-[#ce392b] dark:border-[#ce392b]"
         placeholder={mode === "tmdb" ? "Search by title..." : "Search by ID..."}
         value={value}
         onChange={e => setValue(e.target.value)}
