@@ -9,6 +9,7 @@ import { Inter } from "next/font/google";
 import type { Metadata } from "next";
 import ClientLayout from "./client-layout";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,9 +32,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <ClientLayout>
-            {children}
-          </ClientLayout>
+          <Suspense fallback={<div>Loading...</div>}>
+            <ClientLayout>
+              {children}
+            </ClientLayout>
+          </Suspense>
         </ThemeProvider>
       </body>
     </html>
