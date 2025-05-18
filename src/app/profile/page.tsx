@@ -76,9 +76,9 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-6">Profile Settings</h1>
-      <form onSubmit={handleSubmit} className="max-w-md space-y-4">
+    <div className="p-6 max-w-2xl mx-auto rounded-[10px] border border-stroke bg-white shadow-1 dark:border-[#ce392b] dark:bg-[#0d0c0c] dark:shadow-card">
+      <h1 className="text-2xl font-bold mb-6 text-black dark:text-[#d7d7d6]">Profile Settings</h1>
+      <form onSubmit={handleSubmit} className="space-y-4">
         <InputGroup
           label="Display Name"
           type="text"
@@ -87,6 +87,7 @@ export default function ProfilePage() {
           handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setProfileData({ ...profileData, displayName: e.target.value })
           }
+          inputClassName="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-black placeholder-gray-400 focus:border-[#ce392b] focus:ring-1 focus:ring-[#ce392b] dark:border-[#ce392b] dark:bg-black dark:text-[#d7d7d6] dark:placeholder-[#ce392b] dark:focus:border-[#ce392b] dark:focus:ring-[#ce392b] py-2.5"
         />
         <InputGroup
           label="Email"
@@ -96,6 +97,7 @@ export default function ProfilePage() {
           handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setProfileData({ ...profileData, email: e.target.value })
           }
+          inputClassName="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-black placeholder-gray-400 focus:border-[#ce392b] focus:ring-1 focus:ring-[#ce392b] dark:border-[#ce392b] dark:bg-black dark:text-[#d7d7d6] dark:placeholder-[#ce392b] dark:focus:border-[#ce392b] dark:focus:ring-[#ce392b] py-2.5"
         />
         <InputGroup
           label="Phone Number"
@@ -105,8 +107,9 @@ export default function ProfilePage() {
           handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setProfileData({ ...profileData, phoneNumber: e.target.value })
           }
+          inputClassName="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-black placeholder-gray-400 focus:border-[#ce392b] focus:ring-1 focus:ring-[#ce392b] dark:border-[#ce392b] dark:bg-black dark:text-[#d7d7d6] dark:placeholder-[#ce392b] dark:focus:border-[#ce392b] dark:focus:ring-[#ce392b] py-2.5"
         />
-        <Button type="submit" disabled={isLoading}>
+        <Button type="submit" disabled={isLoading} className="w-full rounded-lg bg-[#ce392b] py-2.5 font-semibold text-white hover:bg-[#770203] transition-colors disabled:opacity-60 disabled:cursor-not-allowed">
           {isLoading ? "Updating..." : "Update Profile"}
         </Button>
       </form>

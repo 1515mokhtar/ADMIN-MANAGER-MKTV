@@ -23,6 +23,7 @@ export function PersonalInfoForm() {
             icon={<UserIcon />}
             iconPosition="left"
             height="sm"
+            inputClassName="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-black placeholder-gray-400 focus:border-[#ce392b] focus:ring-1 focus:ring-[#ce392b] dark:border-[#ce392b] dark:bg-black dark:text-[#d7d7d6] dark:placeholder-[#ce392b] dark:focus:border-[#ce392b] dark:focus:ring-[#ce392b] py-2.5"
           />
 
           <InputGroup
@@ -35,6 +36,7 @@ export function PersonalInfoForm() {
             icon={<CallIcon />}
             iconPosition="left"
             height="sm"
+            inputClassName="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-black placeholder-gray-400 focus:border-[#ce392b] focus:ring-1 focus:ring-[#ce392b] dark:border-[#ce392b] dark:bg-black dark:text-[#d7d7d6] dark:placeholder-[#ce392b] dark:focus:border-[#ce392b] dark:focus:ring-[#ce392b] py-2.5"
           />
         </div>
 
@@ -48,6 +50,7 @@ export function PersonalInfoForm() {
           icon={<EmailIcon />}
           iconPosition="left"
           height="sm"
+          inputClassName="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-black placeholder-gray-400 focus:border-[#ce392b] focus:ring-1 focus:ring-[#ce392b] dark:border-[#ce392b] dark:bg-black dark:text-[#d7d7d6] dark:placeholder-[#ce392b] dark:focus:border-[#ce392b] dark:focus:ring-[#ce392b] py-2.5"
         />
 
         <InputGroup
@@ -60,6 +63,7 @@ export function PersonalInfoForm() {
           icon={<UserIcon />}
           iconPosition="left"
           height="sm"
+          inputClassName="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-black placeholder-gray-400 focus:border-[#ce392b] focus:ring-1 focus:ring-[#ce392b] dark:border-[#ce392b] dark:bg-black dark:text-[#d7d7d6] dark:placeholder-[#ce392b] dark:focus:border-[#ce392b] dark:focus:ring-[#ce392b] py-2.5"
         />
 
         <TextAreaGroup
@@ -68,18 +72,19 @@ export function PersonalInfoForm() {
           placeholder="Write your bio here"
           icon={<PencilSquareIcon />}
           defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam lacinia turpis tortor, consequat efficitur mi congue a. Curabitur cursus, ipsum ut lobortis sodales, enim arcu pellentesque lectus ac suscipit diam sem a felis. Cras sapien ex, blandit eu dui et suscipit gravida nunc. Sed sed est quis dui."
+          textareaClassName="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-black placeholder-gray-400 focus:border-[#ce392b] focus:ring-1 focus:ring-[#ce392b] dark:border-[#ce392b] dark:bg-black dark:text-[#d7d7d6] dark:placeholder-[#ce392b] dark:focus:border-[#ce392b] dark:focus:ring-[#ce392b] py-2.5"
         />
 
         <div className="flex justify-end gap-3">
           <button
-            className="rounded-lg border border-stroke px-6 py-[7px] font-medium text-dark hover:shadow-1 dark:border-dark-3 dark:text-white"
+            className="rounded-lg border border-[#ce392b] px-6 py-[7px] font-medium text-[#ce392b] hover:bg-[#ce392b]/10 dark:border-[#ce392b] dark:text-[#d7d7d6] dark:hover:bg-[#ce392b]/20 transition-colors"
             type="button"
           >
             Cancel
           </button>
 
           <button
-            className="rounded-lg bg-primary px-6 py-[7px] font-medium text-gray-2 hover:bg-opacity-90"
+            className="rounded-lg bg-[#ce392b] px-6 py-[7px] font-medium text-white hover:bg-[#770203] transition-colors"
             type="submit"
           >
             Save
