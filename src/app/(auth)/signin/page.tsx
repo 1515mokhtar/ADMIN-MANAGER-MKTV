@@ -36,6 +36,7 @@ const SignIn = () => {
               />
             </Link>
             <h1>Sign In to MKTV</h1>
+          
             <p className="text-base text-body-color dark:text-body-color-dark">
               Welcome back! Please sign in to continue.
             </p>
@@ -44,7 +45,7 @@ const SignIn = () => {
           <SignInForm />
 
           <p className="mt-8 text-center text-base text-body-color dark:text-body-color-dark">
-            Don't have an account?{" "}
+            Don  &apost have an account?{" "}
             <Link href="/signup" className="text-primary hover:underline">
               Sign up
             </Link>
