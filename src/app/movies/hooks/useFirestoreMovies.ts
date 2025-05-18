@@ -11,7 +11,13 @@ export function useFirestoreMovies(queryStr: string, page: number) {
     if (!queryStr) return;
     setLoading(true);
     // Adapt this query to your Firestore structure
-    const moviesRef = collection(db(), "movies");
+    const database = db();
+    if (!database) {
+      setMovies([]);
+      setLoading(false);
+      return;
+    }
+    const moviesRef = collection(database, "movies");
     let q = query(moviesRef, where("id", "==", queryStr), orderBy("id"), limit(10));
     getDocs(q).then(snapshot => {
       const docs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
