@@ -2,21 +2,43 @@ import Link from "next/link";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 
-export function MovieCard({ id, posterUrl, title, year, rating, ...rest }) {
+interface MovieCardProps {
+  id: string | number;
+  posterUrl: string;
+  title: string;
+  year: string | number;
+  rating: string | number;
+  overview?: string;
+  popularity?: number | string;
+  genre_ids?: number[];
+  [key: string]: any;
+}
+
+export function MovieCard({
+  id,
+  posterUrl,
+  title,
+  year,
+  rating,
+  overview,
+  popularity,
+  genre_ids,
+  ...rest
+}: MovieCardProps) {
   const router = useRouter();
   const handleAdd = () => {
     const params = new URLSearchParams({
       title: title || "",
-      year: year || "",
+      year: year?.toString() || "",
       posterUrl: posterUrl || "",
       rating: rating?.toString() || "",
       tmdbId: id?.toString() || "",
       description: rest.description || "",
       duration: rest.duration || "",
-      popularity: rest.popularity?.toString() || "",
+      popularity: popularity?.toString() || "",
       movieId: id?.toString() || "",
-      genreIds: rest.genre_ids?.join(",") || "",
-      overview: rest.overview || "",
+      genreIds: (genre_ids && Array.isArray(genre_ids)) ? genre_ids.join(",") : "",
+      overview: overview || "",
     });
     router.push(`/movies/add?${params.toString()}`);
   };
