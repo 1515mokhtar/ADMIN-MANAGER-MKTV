@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import { default as InputGroup } from "@/components/FormElements/InputGroup";
 import { TextAreaGroup } from "@/components/FormElements/InputGroup/text-area";
@@ -10,7 +10,41 @@ import { useMovies } from "../hooks/useMovies";
 
 export default function AddMoviePage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { addMovie } = useMovies();
+  const [form, setForm] = useState({
+    title: "",
+    year: "",
+    posterUrl: "",
+    rating: "",
+    tmdbId: "",
+    description: "",
+    duration: "",
+    popularity: "",
+    movieId: "",
+    genreIds: "",
+    overview: "",
+    // autres champs...
+  });
+
+  useEffect(() => {
+    if (searchParams) {
+      setForm({
+        title: searchParams.get("title") || "",
+        year: searchParams.get("year") || "",
+        posterUrl: searchParams.get("posterUrl") || "",
+        rating: searchParams.get("rating") || "",
+        tmdbId: searchParams.get("tmdbId") || "",
+        description: searchParams.get("description") || "",
+        duration: searchParams.get("duration") || "",
+        popularity: searchParams.get("popularity") || "",
+        movieId: searchParams.get("movieId") || "",
+        genreIds: searchParams.get("genreIds") || "",
+        overview: searchParams.get("overview") || "",
+        // autres champs...
+      });
+    }
+  }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -56,7 +90,7 @@ export default function AddMoviePage() {
               name="title"
               type="text"
               placeholder="Titre du film"
-              defaultValue="G20 -2025"
+              defaultValue={form.title}
               required
               inputClassName="bg-white text-gray-900 border-gray-300 px-4 py-2.5 dark:bg-black dark:text-white dark:placeholder-[#ce392b] dark:border-[#770203] transition-colors"
             />
@@ -65,7 +99,7 @@ export default function AddMoviePage() {
               name="movieId"
               type="text"
               placeholder="ID unique du film"
-              defaultValue="1045938"
+              defaultValue={form.movieId}
               required
               inputClassName="bg-white text-gray-900 border-gray-300 px-4 py-2.5 dark:bg-black dark:text-white dark:placeholder-[#ce392b] dark:border-[#770203] transition-colors"
             />
@@ -83,13 +117,14 @@ export default function AddMoviePage() {
             placeholder="Sélectionnez une catégorie"
             required
             selectClassName="bg-white text-gray-900 border-gray-300 px-4 py-2.5 dark:bg-black dark:text-white dark:placeholder-[#ce392b] dark:border-[#770203] transition-colors"
+            defaultValue={form.genreIds}
           />
 
           <TextAreaGroup
             label="Description"
             name="description"
             placeholder="Description du film"
-            defaultValue="Description du film G20 -2025"
+            defaultValue={form.overview}
             required
             textareaClassName="bg-white text-gray-900 border-gray-300 px-4 py-2.5 dark:bg-black dark:text-white dark:placeholder-[#ce392b] dark:border-[#770203] transition-colors"
           />
@@ -100,10 +135,10 @@ export default function AddMoviePage() {
               name="rating"
               type="number"
               placeholder="Note sur 10"
-              defaultValue="7.5"
+              defaultValue={form.rating}
               min="0"
               max="10"
-              step="0.1"
+              step="0.2"
               required
               inputClassName="bg-white text-gray-900 border-gray-300 px-4 py-2.5 dark:bg-black dark:text-white dark:placeholder-[#ce392b] dark:border-[#770203] transition-colors"
             />
@@ -112,7 +147,7 @@ export default function AddMoviePage() {
               name="year"
               type="number"
               placeholder="Année de sortie"
-              defaultValue="2025"
+              defaultValue={form.year}
               required
               inputClassName="bg-white text-gray-900 border-gray-300 px-4 py-2.5 dark:bg-black dark:text-white dark:placeholder-[#ce392b] dark:border-[#770203] transition-colors"
             />
@@ -124,7 +159,7 @@ export default function AddMoviePage() {
               name="timeline"
               type="text"
               placeholder="Durée du film (ex: 2h30)"
-              defaultValue="2h15"
+              defaultValue={form.duration}
               required
               inputClassName="bg-white text-gray-900 border-gray-300 px-4 py-2.5 dark:bg-black dark:text-white dark:placeholder-[#ce392b] dark:border-[#770203] transition-colors"
             />
@@ -133,9 +168,9 @@ export default function AddMoviePage() {
               name="popularity"
               type="number"
               placeholder="Score de popularité"
-              defaultValue="85"
-              min="0"
-              max="100"
+              defaultValue={form.popularity}
+              min="10"
+              max="2000"
               required
               inputClassName="bg-white text-gray-900 border-gray-300 px-4 py-2.5 dark:bg-black dark:text-white dark:placeholder-[#ce392b] dark:border-[#770203] transition-colors"
             />

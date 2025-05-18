@@ -18,6 +18,12 @@ export const NAV_DATA = [
             url: "/movies",
             icon: Icons.HomeIcon,
           },
+          {
+            title: "Movie Search",
+            url: "/movies/search",
+            icon: Icons.Alphabet,
+            items: [],
+          },
         ],
       },
       {
