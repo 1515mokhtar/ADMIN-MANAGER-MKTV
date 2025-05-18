@@ -122,8 +122,6 @@ export default function EditMoviePage({ params }: { params: { id: string } }) {
               type="text"
               placeholder="Note sur 10 (ex: 5,697)"
               defaultValue={movie.rating.toString().replace('.', ',')}
-              pattern="^\d{1,2},\d{1,3}$"
-              title="Format attendu : x,xxx (ex: 5,697)"
               required
               inputClassName="bg-white text-gray-900 border-gray-300 px-4 py-2.5 dark:bg-black dark:text-white dark:placeholder-[#ce392b] dark:border-[#770203] transition-colors"
             />
