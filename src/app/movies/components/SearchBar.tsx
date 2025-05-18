@@ -1,7 +1,13 @@
 import { useState } from "react";
 import clsx from "clsx";
 
-export function SearchBar({ onSearch, mode, setMode }) {
+interface SearchBarProps {
+  onSearch: (value: string) => void;
+  mode: "tmdb" | "firestore";
+  setMode: (mode: "tmdb" | "firestore") => void;
+}
+
+export function SearchBar({ onSearch, mode, setMode }: SearchBarProps) {
   const [value, setValue] = useState("");
   return (
     <div className="flex gap-2 items-center mb-6">
