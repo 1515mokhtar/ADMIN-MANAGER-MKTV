@@ -27,7 +27,7 @@ console.log('Firebase Config:', {
 // Check if all required config values are present
 const isConfigValid = Object.values(firebaseConfig).every(value => value !== undefined && value !== '');
 if (!isConfigValid) {
-  console.error('Firebase configuration is incomplete. Please check your .env.local file.');
+  console.error('Firebase configuration is incomplete. Please check your environment variables.');
 }
 
 let firebaseApp: FirebaseApp | null = null;
@@ -35,17 +35,6 @@ let firebaseAuth: Auth | null = null;
 let firebaseDb: Firestore | null = null;
 
 export const initFirebase = () => {
-  if (typeof window === 'undefined') {
-    console.log('Running on server side, skipping Firebase initialization');
-    return null;
-  }
-
-  // Check network connectivity
-  if (!navigator.onLine) {
-    console.error('No internet connection available');
-    return null;
-  }
-  
   try {
     if (!firebaseApp) {
       console.log('Initializing Firebase...');
@@ -55,27 +44,22 @@ export const initFirebase = () => {
         throw new Error('Invalid Firebase configuration');
       }
 
-      firebaseApp = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-      console.log('Firebase app initialized');
+      // Initialize Firebase only once
+      if (!getApps().length) {
+        firebaseApp = initializeApp(firebaseConfig);
+        console.log('Firebase app initialized');
+      } else {
+        firebaseApp = getApp();
+        console.log('Using existing Firebase app');
+      }
 
+      // Initialize Auth
       firebaseAuth = getAuth(firebaseApp);
       console.log('Firebase Auth initialized');
 
+      // Initialize Firestore
       firebaseDb = getFirestore(firebaseApp);
       console.log('Firestore initialized');
-
-      // Add network state change listener
-      window.addEventListener('online', () => {
-        console.log('Network connection restored');
-        // Reinitialize Firebase if needed
-        if (!firebaseApp) {
-          initFirebase();
-        }
-      });
-
-      window.addEventListener('offline', () => {
-        console.log('Network connection lost');
-      });
     }
     
     return { app: firebaseApp, auth: firebaseAuth, db: firebaseDb };
@@ -91,19 +75,16 @@ export const initFirebase = () => {
 
 // Export getters that will initialize Firebase if needed
 export const getFirebaseApp = () => {
-  if (typeof window === 'undefined') return null;
   if (!firebaseApp) initFirebase();
   return firebaseApp;
 };
 
 export const getFirebaseAuth = () => {
-  if (typeof window === 'undefined') return null;
   if (!firebaseAuth) initFirebase();
   return firebaseAuth;
 };
 
 export const getFirebaseDb = () => {
-  if (typeof window === 'undefined') return null;
   if (!firebaseDb) initFirebase();
   return firebaseDb;
 };

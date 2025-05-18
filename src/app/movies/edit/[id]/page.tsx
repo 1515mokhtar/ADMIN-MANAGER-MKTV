@@ -59,12 +59,12 @@ export default function EditMoviePage({ params }: { params: { id: string } }) {
     <>
       <Breadcrumb pageName="Modifier un Film" />
 
-      <div className="rounded-[10px] border border-stroke bg-white p-4 shadow-1 dark:border-dark-3 dark:bg-gray-dark dark:shadow-card sm:p-7.5">
+      <div className="rounded-[10px] border border-stroke bg-white p-4 shadow-1 sm:p-7.5 dark:border-[#ce392b] dark:bg-[#ce392b] dark:shadow-card">
         <div className="mb-6">
-          <h2 className="text-2xl font-semibold text-black dark:text-white">
+          <h2 className="text-2xl font-semibold text-black dark:text-[#d7d7d6]">
             Modifier le Film
           </h2>
-          <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+          <p className="mt-2 text-sm text-gray-500 dark:text-[#d7d7d6]">
             Modifiez les informations du film ci-dessous
           </p>
         </div>
@@ -78,6 +78,7 @@ export default function EditMoviePage({ params }: { params: { id: string } }) {
               placeholder="Titre du film"
               defaultValue={movie.title}
               required
+              inputClassName="bg-white text-gray-900 border-gray-300 px-4 py-2.5 dark:bg-black dark:text-white dark:placeholder-[#ce392b] dark:border-[#770203] transition-colors"
             />
             <InputGroup
               label="ID du Film"
@@ -87,6 +88,7 @@ export default function EditMoviePage({ params }: { params: { id: string } }) {
               defaultValue={movie.id}
               required
               readOnly
+              inputClassName="bg-white text-gray-900 border-gray-300 px-4 py-2.5 dark:bg-black dark:text-white dark:placeholder-[#ce392b] dark:border-[#770203] transition-colors"
             />
           </div>
 
@@ -101,6 +103,7 @@ export default function EditMoviePage({ params }: { params: { id: string } }) {
             ]}
             defaultValue={movie.category}
             required
+            selectClassName="bg-white text-gray-900 border-gray-300 px-4 py-2.5 dark:bg-black dark:text-white dark:placeholder-[#ce392b] dark:border-[#770203] transition-colors"
           />
 
           <TextAreaGroup
@@ -109,6 +112,7 @@ export default function EditMoviePage({ params }: { params: { id: string } }) {
             placeholder="Description du film"
             defaultValue={movie.description}
             required
+            textareaClassName="bg-white text-gray-900 border-gray-300 px-4 py-2.5 dark:bg-black dark:text-white dark:placeholder-[#ce392b] dark:border-[#770203] transition-colors"
           />
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -122,6 +126,7 @@ export default function EditMoviePage({ params }: { params: { id: string } }) {
               max="10"
               step="0.1"
               required
+              inputClassName="bg-white text-gray-900 border-gray-300 px-4 py-2.5 dark:bg-black dark:text-white dark:placeholder-[#ce392b] dark:border-[#770203] transition-colors"
             />
             <InputGroup
               label="Année"
@@ -130,6 +135,7 @@ export default function EditMoviePage({ params }: { params: { id: string } }) {
               placeholder="Année de sortie"
               defaultValue={movie.year.toString()}
               required
+              inputClassName="bg-white text-gray-900 border-gray-300 px-4 py-2.5 dark:bg-black dark:text-white dark:placeholder-[#ce392b] dark:border-[#770203] transition-colors"
             />
           </div>
 
@@ -141,6 +147,7 @@ export default function EditMoviePage({ params }: { params: { id: string } }) {
               placeholder="Durée du film (ex: 2h30)"
               defaultValue={movie.timeline}
               required
+              inputClassName="bg-white text-gray-900 border-gray-300 px-4 py-2.5 dark:bg-black dark:text-white dark:placeholder-[#ce392b] dark:border-[#770203] transition-colors"
             />
             <InputGroup
               label="Popularité"
@@ -151,6 +158,7 @@ export default function EditMoviePage({ params }: { params: { id: string } }) {
               min="0"
               max="100"
               required
+              inputClassName="bg-white text-gray-900 border-gray-300 px-4 py-2.5 dark:bg-black dark:text-white dark:placeholder-[#ce392b] dark:border-[#770203] transition-colors"
             />
           </div>
 
@@ -161,19 +169,20 @@ export default function EditMoviePage({ params }: { params: { id: string } }) {
             placeholder="URL du film"
             defaultValue={movie.urlmovie}
             required
+            inputClassName="bg-white text-gray-900 border-gray-300 px-4 py-2.5 dark:bg-black dark:text-white dark:placeholder-[#ce392b] dark:border-[#770203] transition-colors"
           />
 
           <div className="mt-6 flex justify-end gap-4">
             <button
               type="button"
               onClick={() => router.push("/movies")}
-              className="rounded border border-stroke px-6 py-2.5 text-dark hover:bg-gray-2 dark:border-dark-3 dark:text-white dark:hover:bg-dark-2"
+              className="rounded border border-stroke px-6 py-2.5 text-dark hover:bg-gray-2 dark:border-[#770203] dark:text-[#d7d7d6] dark:hover:bg-[#770203] dark:hover:text-white transition-colors"
             >
               Annuler
             </button>
             <button
               type="submit"
-              className="rounded bg-primary px-6 py-2.5 text-white hover:bg-opacity-90"
+              className="rounded px-6 py-2.5 font-semibold text-white bg-[#ce392b] hover:bg-[#770203] transition-colors"
             >
               Modifier
             </button>

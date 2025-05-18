@@ -13,53 +13,52 @@ export function Header() {
   const { toggleSidebar, isMobile } = useSidebarContext();
 
   return (
-    <header className="sticky top-0 z-30 flex items-center justify-between border-b border-stroke bg-white px-4 py-5 shadow-1 dark:border-stroke-dark dark:bg-gray-dark md:px-5 2xl:px-10">
-      <button
-        onClick={toggleSidebar}
-        className="rounded-lg border px-1.5 py-1 dark:border-stroke-dark dark:bg-[#020D1A] hover:dark:bg-[#FFFFFF1A] lg:hidden"
-      >
-        <MenuIcon />
-        <span className="sr-only">Toggle Sidebar</span>
-      </button>
+    <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-gray-200 bg-white px-4 shadow-sm dark:border-[#770203] dark:bg-[#0d0c0c] md:px-6">
+      <div className="flex items-center gap-4">
+        <button
+          onClick={toggleSidebar}
+          className="rounded-lg p-2 text-gray-500 hover:bg-gray-100 dark:text-[#d7d7d6] dark:hover:bg-[#770203]/10 lg:hidden"
+        >
+          <MenuIcon />
+          <span className="sr-only">Toggle Sidebar</span>
+        </button>
 
-      {isMobile && (
-        <Link href={"/"} className="ml-2 flex items-center gap-4 max-[430px]:hidden min-[375px]:ml-4">
-          <Image
-            src="/images/logo.png"
-            alt="MKTV Logo"
-            width={180}
-            height={60}
-            className="h-16 w-auto"
-          />
-          <span className="text-xl font-bold text-primary dark:text-gray-400">ADMIN Manager</span>
-        </Link>
-      )}
+        {isMobile && (
+          <Link href={"/"} className="flex items-center gap-2">
+            <Image
+              src="/images/logo.png"
+              alt="MKTV Logo"
+              width={120}
+              height={40}
+              className="h-8 w-auto"
+            />
+            <span className="text-lg font-semibold text-gray-900 dark:text-[#d7d7d6]">ADMIN</span>
+          </Link>
+        )}
 
-      <div className="max-xl:hidden">
-        <h1 className="mb-0.5 text-heading-5 font-bold text-dark dark:text-white">
-          Dashboard
-        </h1>
-        <p className="font-medium">Next.js Admin Dashboard Solution</p>
+        <div className="hidden md:block">
+          <h1 className="text-lg font-semibold text-gray-900 dark:text-[#d7d7d6]">
+            Dashboard
+          </h1>
+          <p className="text-sm text-gray-500 dark:text-[#d7d7d6]/70">Welcome back</p>
+        </div>
       </div>
 
-      <div className="flex flex-1 items-center justify-end gap-2 min-[375px]:gap-4">
-        <div className="relative w-full max-w-[300px]">
+      <div className="flex items-center gap-4">
+        <div className="relative hidden md:block">
           <input
             type="search"
-            placeholder="Search"
-            className="flex w-full items-center gap-3.5 rounded-full border bg-gray-2 py-3 pl-[53px] pr-5 outline-none transition-colors focus-visible:border-primary dark:border-dark-3 dark:bg-dark-2 dark:hover:border-dark-4 dark:hover:bg-dark-3 dark:hover:text-dark-6 dark:focus-visible:border-primary"
+            placeholder="Search..."
+            className="w-64 rounded-lg border border-gray-200 bg-gray-50 py-2 pl-10 pr-4 text-sm outline-none transition-colors focus:border-[#770203] focus:ring-1 focus:ring-[#770203] dark:border-[#770203] dark:bg-[#0d0c0c] dark:text-[#d7d7d6] dark:placeholder-[#d7d7d6]/50"
           />
-
-          <SearchIcon className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 max-[1015px]:size-5" />
+          <SearchIcon className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400 dark:text-[#d7d7d6]" />
         </div>
 
         <ThemeToggleSwitch />
 
         <Notification />
 
-        <div className="shrink-0">
-          <UserInfo />
-        </div>
+        <UserInfo />
       </div>
     </header>
   );

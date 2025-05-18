@@ -39,12 +39,12 @@ export default function AddMoviePage() {
     <>
       <Breadcrumb pageName="Ajouter un Film" />
 
-      <div className="rounded-[10px] border border-stroke bg-white p-4 shadow-1 dark:border-dark-3 dark:bg-gray-dark dark:shadow-card sm:p-7.5">
+      <div className="rounded-[10px] border border-stroke bg-white p-4 shadow-1 sm:p-7.5 dark:border-[#ce392b] dark:bg-[#ce392b] dark:shadow-card">
         <div className="mb-6">
-          <h2 className="text-2xl font-semibold text-black dark:text-white">
+          <h2 className="text-2xl font-semibold text-black dark:text-[#d7d7d6]">
             Ajouter un Nouveau Film
           </h2>
-          <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+          <p className="mt-2 text-sm text-gray-500 dark:text-[#d7d7d6]">
             Remplissez les informations ci-dessous pour ajouter un nouveau film
           </p>
         </div>
@@ -58,6 +58,7 @@ export default function AddMoviePage() {
               placeholder="Titre du film"
               defaultValue="G20 -2025"
               required
+              inputClassName="bg-white text-gray-900 border-gray-300 px-4 py-2.5 dark:bg-black dark:text-white dark:placeholder-[#ce392b] dark:border-[#770203] transition-colors"
             />
             <InputGroup
               label="ID du Film"
@@ -66,6 +67,7 @@ export default function AddMoviePage() {
               placeholder="ID unique du film"
               defaultValue="1045938"
               required
+              inputClassName="bg-white text-gray-900 border-gray-300 px-4 py-2.5 dark:bg-black dark:text-white dark:placeholder-[#ce392b] dark:border-[#770203] transition-colors"
             />
           </div>
 
@@ -80,6 +82,7 @@ export default function AddMoviePage() {
             ]}
             placeholder="Sélectionnez une catégorie"
             required
+            selectClassName="bg-white text-gray-900 border-gray-300 px-4 py-2.5 dark:bg-black dark:text-white dark:placeholder-[#ce392b] dark:border-[#770203] transition-colors"
           />
 
           <TextAreaGroup
@@ -88,6 +91,7 @@ export default function AddMoviePage() {
             placeholder="Description du film"
             defaultValue="Description du film G20 -2025"
             required
+            textareaClassName="bg-white text-gray-900 border-gray-300 px-4 py-2.5 dark:bg-black dark:text-white dark:placeholder-[#ce392b] dark:border-[#770203] transition-colors"
           />
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -101,6 +105,7 @@ export default function AddMoviePage() {
               max="10"
               step="0.1"
               required
+              inputClassName="bg-white text-gray-900 border-gray-300 px-4 py-2.5 dark:bg-black dark:text-white dark:placeholder-[#ce392b] dark:border-[#770203] transition-colors"
             />
             <InputGroup
               label="Année"
@@ -109,6 +114,7 @@ export default function AddMoviePage() {
               placeholder="Année de sortie"
               defaultValue="2025"
               required
+              inputClassName="bg-white text-gray-900 border-gray-300 px-4 py-2.5 dark:bg-black dark:text-white dark:placeholder-[#ce392b] dark:border-[#770203] transition-colors"
             />
           </div>
 
@@ -120,6 +126,7 @@ export default function AddMoviePage() {
               placeholder="Durée du film (ex: 2h30)"
               defaultValue="2h15"
               required
+              inputClassName="bg-white text-gray-900 border-gray-300 px-4 py-2.5 dark:bg-black dark:text-white dark:placeholder-[#ce392b] dark:border-[#770203] transition-colors"
             />
             <InputGroup
               label="Popularité"
@@ -130,6 +137,7 @@ export default function AddMoviePage() {
               min="0"
               max="100"
               required
+              inputClassName="bg-white text-gray-900 border-gray-300 px-4 py-2.5 dark:bg-black dark:text-white dark:placeholder-[#ce392b] dark:border-[#770203] transition-colors"
             />
           </div>
 
@@ -140,19 +148,20 @@ export default function AddMoviePage() {
             placeholder="URL du film"
             defaultValue="https://uqload.net/embed-py021hcj5ull.ht"
             required
+            inputClassName="bg-white text-gray-900 border-gray-300 px-4 py-2.5 dark:bg-black dark:text-white dark:placeholder-[#ce392b] dark:border-[#770203] transition-colors"
           />
 
           <div className="mt-6 flex justify-end gap-4">
             <button
               type="button"
               onClick={() => router.push("/movies")}
-              className="rounded border border-stroke px-6 py-2.5 text-dark hover:bg-gray-2 dark:border-dark-3 dark:text-white dark:hover:bg-dark-2"
+              className="rounded border border-stroke px-6 py-2.5 text-dark hover:bg-gray-2 dark:border-[#770203] dark:text-[#d7d7d6] dark:hover:bg-[#770203] dark:hover:text-white transition-colors"
             >
               Annuler
             </button>
             <button
               type="submit"
-              className="rounded bg-primary px-6 py-2.5 text-white hover:bg-opacity-90"
+              className="rounded px-6 py-2.5 font-semibold text-white bg-[#ce392b] hover:bg-[#770203] transition-colors"
             >
               Ajouter
             </button>

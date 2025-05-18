@@ -21,6 +21,7 @@ type InputGroupProps = {
   max?: string;
   step?: string;
   readOnly?: boolean;
+  inputClassName?: string;
 };
 
 const InputGroup: React.FC<InputGroupProps> = ({
@@ -33,6 +34,7 @@ const InputGroup: React.FC<InputGroupProps> = ({
   active,
   handleChange,
   icon,
+  inputClassName,
   ...props
 }) => {
   const id = useId();
@@ -74,6 +76,7 @@ const InputGroup: React.FC<InputGroupProps> = ({
               : "px-5.5 py-3 text-dark placeholder:text-dark-6 dark:text-white",
             props.iconPosition === "left" && "pl-12.5",
             props.height === "sm" && "py-2.5",
+            inputClassName
           )}
           required={required}
           disabled={disabled}

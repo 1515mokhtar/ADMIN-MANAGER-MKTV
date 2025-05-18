@@ -8,6 +8,7 @@ import { Providers } from "./providers";
 import { AuthProvider } from "@/contexts/auth-context";
 import { useAuth } from "@/contexts/auth-context";
 import { usePathname } from "next/navigation";
+import { SidebarProvider } from "@/components/Layouts/sidebar/sidebar-context";
 
 function LayoutContent({ children }: PropsWithChildren) {
   const { user, loading } = useAuth();
@@ -16,8 +17,8 @@ function LayoutContent({ children }: PropsWithChildren) {
 
   if (loading) {
     return (
-      <div className="flex h-screen items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
+      <div className="flex h-screen items-center justify-center bg-[#0d0c0c]">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#770203] border-t-transparent"></div>
       </div>
     );
   }
@@ -34,15 +35,19 @@ function LayoutContent({ children }: PropsWithChildren) {
 
   // Afficher le layout complet pour les utilisateurs connectés
   return (
-    <div className="flex min-h-screen">
-      <Sidebar />
-      <div className="w-full bg-gray-2 dark:bg-[#020d1a]">
-        <Header />
-        <main className="isolate mx-auto w-full max-w-screen-2xl overflow-hidden p-4 md:p-6 2xl:p-10">
-          {children}
-        </main>
+    <SidebarProvider>
+      <div className="flex min-h-screen bg-gray-50 dark:bg-[#0d0c0c]">
+        <Sidebar />
+        <div className="flex-1 flex flex-col min-h-screen">
+          <Header />
+          <main className="flex-1 p-4 md:p-6 lg:p-8 overflow-x-hidden">
+            <div className="mx-auto max-w-7xl">
+              {children}
+            </div>
+          </main>
+        </div>
       </div>
-    </div>
+    </SidebarProvider>
   );
 }
 
@@ -50,7 +55,7 @@ export default function ClientLayout({ children }: PropsWithChildren) {
   return (
     <AuthProvider>
       <Providers>
-        <NextTopLoader color="#5750F1" showSpinner={false} />
+        <NextTopLoader color="#770203" showSpinner={false} />
         <LayoutContent>{children}</LayoutContent>
       </Providers>
     </AuthProvider>

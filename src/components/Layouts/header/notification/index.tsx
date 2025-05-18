@@ -55,7 +55,7 @@ export function Notification() {
       }}
     >
       <DropdownTrigger
-        className="grid size-12 place-items-center rounded-full border bg-gray-2 text-dark outline-none hover:text-primary focus-visible:border-primary focus-visible:text-primary dark:border-dark-4 dark:bg-dark-3 dark:text-white dark:focus-visible:border-primary"
+        className="grid size-12 place-items-center rounded-full border bg-gray-2 text-dark outline-none hover:text-primary focus-visible:border-primary focus-visible:text-primary dark:border-[#ce392b] dark:bg-[#0d0c0c] dark:text-[#d7d7d6] dark:hover:text-[#ce392b] dark:focus-visible:border-[#ce392b]"
         aria-label="View Notifications"
       >
         <span className="relative">
@@ -75,13 +75,13 @@ export function Notification() {
 
       <DropdownContent
         align={isMobile ? "end" : "center"}
-        className="border border-stroke bg-white px-3.5 py-3 shadow-md dark:border-dark-3 dark:bg-gray-dark min-[350px]:min-w-[20rem]"
+        className="border border-stroke bg-white px-3.5 py-3 shadow-md dark:border-[#ce392b] dark:bg-[#0d0c0c] min-[350px]:min-w-[20rem]"
       >
         <div className="mb-1 flex items-center justify-between px-2 py-1.5">
-          <span className="text-lg font-medium text-dark dark:text-white">
+          <span className="text-lg font-medium text-dark dark:text-[#d7d7d6]">
             Notifications
           </span>
-          <span className="rounded-md bg-primary px-[9px] py-0.5 text-xs font-medium text-white" role="status">
+          <span className="rounded-md bg-[#ce392b] px-[9px] py-0.5 text-xs font-medium text-white" role="status">
             5 new
           </span>
         </div>
@@ -93,7 +93,7 @@ export function Notification() {
                 <Link
                   href="#"
                   onClick={() => setIsOpen(false)}
-                  className="flex items-center gap-4 rounded-lg px-2 py-1.5 outline-none hover:bg-gray-2 focus-visible:bg-gray-2 dark:hover:bg-dark-3 dark:focus-visible:bg-dark-3"
+                  className="flex items-center gap-4 rounded-lg px-2 py-1.5 outline-none hover:bg-gray-2 focus-visible:bg-gray-2 dark:hover:bg-[#770203]/20 dark:focus-visible:bg-[#770203]/20"
                   role="menuitem"
                   aria-label={`${item.title}: ${item.subTitle}`}
                 >
@@ -107,10 +107,10 @@ export function Notification() {
                   </div>
 
                   <div>
-                    <p className="text-sm font-medium text-dark dark:text-white">
+                    <p className="text-sm font-medium text-dark dark:text-[#d7d7d6]">
                       {item.title}
                     </p>
-                    <p className="text-xs text-dark-6 dark:text-dark-6">
+                    <p className="text-xs text-dark-6 dark:text-[#d7d7d6]/70">
                       {item.subTitle}
                     </p>
                   </div>
@@ -123,7 +123,7 @@ export function Notification() {
         <Link
           href="#"
           onClick={() => setIsOpen(false)}
-          className="block rounded-lg bg-gray-2 px-2 py-1.5 text-center text-sm font-medium text-dark outline-none hover:bg-gray-3 focus-visible:bg-gray-3 dark:bg-dark-3 dark:text-white dark:hover:bg-dark-4 dark:focus-visible:bg-dark-4"
+          className="block rounded-lg bg-gray-2 px-2 py-1.5 text-center text-sm font-medium text-dark outline-none hover:bg-gray-3 focus-visible:bg-gray-3 dark:bg-[#770203]/20 dark:text-[#d7d7d6] dark:hover:bg-[#770203]/30 dark:focus-visible:bg-[#770203]/30"
           role="menuitem"
           aria-label="See all notifications"
         >

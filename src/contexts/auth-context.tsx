@@ -10,7 +10,8 @@ import {
   sendPasswordResetEmail
 } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams, usePathname } from 'next/navigation';
+import Cookies from 'js-cookie';
 
 interface AuthContextType {
   user: User | null;
@@ -36,13 +37,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [error, setError] = useState<string | null>(null);
   const [userData, setUserData] = useState<any | null>(null);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
 
   useEffect(() => {
-    if (typeof window === 'undefined') {
-      setLoading(false);
-      return;
-    }
-
     const auth = getFirebaseAuth();
     if (!auth) {
       console.error("Firebase Auth not initialized");
@@ -54,6 +52,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
         try {
+          // Obtenir le token d'authentification
+          const token = await currentUser.getIdToken();
+          // Stocker le token dans un cookie
+          Cookies.set('auth-token', token, { expires: 7 }); // Expire dans 7 jours
+
           const db = getFirebaseDb();
           if (!db) {
             throw new Error("Firestore not initialized");
@@ -76,6 +79,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
           setUser(currentUser);
           setUserData(userData);
           setError(null);
+
+          // Rediriger uniquement si on est sur /login ou /
+          const from = searchParams.get('from');
+          if (from) {
+            router.push(from);
+          } else if (pathname === '/login' || pathname === '/') {
+            router.push('/dashboard');
+          }
         } catch (error: any) {
           console.error("Error fetching user data:", error);
           if (error.code === 'network-request-failed') {
@@ -87,6 +98,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
           setIsAdmin(false);
         }
       } else {
+        // Supprimer le cookie lors de la déconnexion
+        Cookies.remove('auth-token');
         setUser(null);
         setIsAdmin(false);
         setUserData(null);
@@ -96,7 +109,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [router, searchParams, pathname]);
 
   const handleNonAdminUser = async () => {
     setError("Access denied. Admin privileges required.");
@@ -138,7 +151,18 @@ export function AuthProvider({ children }: AuthProviderProps) {
         return;
       }
       
-      router.push("/dashboard");
+      // Obtenir le token d'authentification
+      const token = await user.getIdToken();
+      // Stocker le token dans un cookie
+      Cookies.set('auth-token', token, { expires: 7 }); // Expire dans 7 jours
+
+      // Rediriger uniquement si on est sur /login ou /
+      const from = searchParams.get('from');
+      if (from) {
+        router.push(from);
+      } else if (pathname === '/login' || pathname === '/') {
+        router.push('/dashboard');
+      }
     } catch (error: any) {
       console.error("Login error:", error);
       
@@ -167,6 +191,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       setLoading(true);
       await signOut(auth);
+      // Supprimer le cookie lors de la déconnexion
+      Cookies.remove('auth-token');
       setUser(null);
       setIsAdmin(false);
       setUserData(null);

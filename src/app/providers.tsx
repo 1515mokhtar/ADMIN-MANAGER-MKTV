@@ -1,12 +1,17 @@
 "use client";
 
-import { SidebarProvider } from "@/components/Layouts/sidebar/sidebar-context";
-import { ThemeProvider } from "next-themes";
+import { ThemeProvider } from 'next-themes';
+import { AuthProvider } from '@/contexts/auth-context';
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <ThemeProvider defaultTheme="light" attribute="class">
-      <SidebarProvider>{children}</SidebarProvider>
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
+    >
+      <AuthProvider>{children}</AuthProvider>
     </ThemeProvider>
   );
 }

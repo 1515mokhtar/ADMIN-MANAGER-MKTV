@@ -56,20 +56,21 @@ export function Sidebar() {
 
       <aside
         className={cn(
-          "max-w-[290px] overflow-hidden border-r border-gray-200 bg-white transition-[width] duration-200 ease-linear dark:border-gray-800 dark:bg-gray-dark",
+          "w-[280px] overflow-hidden border-r border-gray-200 bg-white shadow-sm transition-all duration-200 ease-linear dark:border-[#770203] dark:bg-[#0d0c0c]",
           isMobile ? "fixed bottom-0 top-0 z-50" : "sticky top-0 h-screen",
-          isOpen ? "w-full" : "w-0",
+          isOpen ? "translate-x-0" : "-translate-x-full",
+          !isOpen && !isMobile && "hidden"
         )}
         aria-label="Main navigation"
         aria-hidden={!isOpen}
         inert={!isOpen}
       >
-        <div className="flex h-full flex-col py-10 pl-[25px] pr-[7px]">
-          <div className="relative pr-4.5">
+        <div className="flex h-full flex-col py-6 px-4">
+          <div className="relative mb-6">
             <Link
               href={"/"}
               onClick={() => isMobile && toggleSidebar()}
-              className="px-0 py-2.5 min-[850px]:py-0"
+              className="block py-2"
             >
               <Logo />
             </Link>
@@ -77,25 +78,24 @@ export function Sidebar() {
             {isMobile && (
               <button
                 onClick={toggleSidebar}
-                className="absolute left-3/4 right-4.5 top-1/2 -translate-y-1/2 text-right"
+                className="absolute right-0 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:text-[#d7d7d6] dark:hover:text-white"
               >
                 <span className="sr-only">Close Menu</span>
-
-                <ArrowLeftIcon className="ml-auto size-7" />
+                <ArrowLeftIcon className="h-6 w-6" />
               </button>
             )}
           </div>
 
           {/* Navigation */}
-          <div className="custom-scrollbar mt-6 flex-1 overflow-y-auto pr-3 min-[850px]:mt-10">
+          <div className="custom-scrollbar flex-1 overflow-y-auto">
             {NAV_DATA.map((section) => (
               <div key={section.label} className="mb-6">
-                <h2 className="mb-5 text-sm font-medium text-dark-4 dark:text-dark-6">
+                <h2 className="mb-3 px-4 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-[#d7d7d6]">
                   {section.label}
                 </h2>
 
                 <nav role="navigation" aria-label={section.label}>
-                  <ul className="space-y-2">
+                  <ul className="space-y-1">
                     {section.items.map((item) => (
                       <li key={item.title}>
                         {item.items.length ? (
@@ -105,8 +105,8 @@ export function Sidebar() {
                               className={cn(
                                 "flex w-full items-center justify-between rounded-lg px-4 py-2 text-sm font-medium transition-colors",
                                 expandedItems.includes(item.title)
-                                  ? "bg-primary/10 text-primary"
-                                  : "text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+                                  ? "bg-[#770203]/10 text-[#770203] dark:bg-[#770203]/20 dark:text-[#d7d7d6]"
+                                  : "text-gray-700 hover:bg-gray-100 dark:text-[#d7d7d6] dark:hover:bg-[#770203]/10"
                               )}
                             >
                               <span>{item.title}</span>
@@ -118,7 +118,7 @@ export function Sidebar() {
                               />
                             </button>
                             {expandedItems.includes(item.title) && (
-                              <ul className="mt-2 space-y-1 pl-4">
+                              <ul className="mt-1 space-y-1 pl-4">
                                 {item.items.map((subItem) => (
                                   <li key={subItem.title}>
                                     <MenuItem
@@ -126,7 +126,7 @@ export function Sidebar() {
                                       title={subItem.title}
                                       icon={subItem.icon}
                                       isActive={pathname === subItem.url}
-                                      className="text-black dark:text-white font-medium"
+                                      className="text-gray-700 dark:text-[#d7d7d6]"
                                     />
                                   </li>
                                 ))}
@@ -139,6 +139,7 @@ export function Sidebar() {
                             title={item.title}
                             icon={item.icon}
                             isActive={pathname === item.url}
+                            className="text-gray-700 dark:text-[#d7d7d6]"
                           />
                         )}
                       </li>

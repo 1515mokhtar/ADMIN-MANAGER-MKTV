@@ -83,7 +83,7 @@ export function TableCell({
   return (
     <td
       className={cn(
-        "p-4 align-middle [&:has([role=checkbox])]:pr-0",
+        "p-4 align-middle [&:has([role=checkbox])]:pr-0 dark:text-[#d7d7d6]",
         className,
       )}
       {...props}

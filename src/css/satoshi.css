@@ -119,3 +119,8 @@
     font-display: swap;
     font-style: italic;
 }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* Add any minimal custom CSS here if needed */

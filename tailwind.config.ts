@@ -2,7 +2,7 @@ import type { Config } from "tailwindcss";
 import defaultTheme from "tailwindcss/defaultTheme";
 
 const config: Config = {
-  content: ["./src/**/*.{js,jsx,tsx}"],
+  content: ["./src/**/*.{js,jsx,tsx,css}"],
   darkMode: ["class"],
   theme: {
     extend: {
@@ -248,7 +248,6 @@ const config: Config = {
         22.5: "5.625rem",
         42.5: "10.625rem",
         47.5: "11.875rem",
-        75: "18.75rem",
       },
       zIndex: {
         999999: "999999",

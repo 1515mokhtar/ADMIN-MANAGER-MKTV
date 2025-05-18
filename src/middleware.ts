@@ -8,26 +8,28 @@ const adminRoutes: string[] = ['/dashboard'];
 // Routes publiques
 const publicRoutes: string[] = ['/login', '/profile'];
 
+// Liste des chemins publics qui ne nécessitent pas d'authentification
+const publicPaths = ['/login', '/forgot-password', '/reset-password'];
+
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
-  // Vérifier l'authentification via le token Firebase
-  const authToken = request.cookies.get('__session')?.value;
-  const isAuthenticated = !!authToken;
+  // Vérifier si le chemin actuel est public
+  const isPublicPath = publicPaths.includes(pathname);
+  
+  // Vérifier si l'utilisateur a un token d'authentification
+  const token = request.cookies.get('auth-token')?.value;
 
-  // Rediriger vers login si non authentifié sur une route protégée
-  if (protectedRoutes.includes(pathname) && !isAuthenticated) {
-    return NextResponse.redirect(new URL('/login', request.url));
+  // Si l'utilisateur n'a pas de token et essaie d'accéder à une route protégée
+  if (!token && !isPublicPath) {
+    const url = new URL('/login', request.url);
+    url.searchParams.set('from', pathname);
+    return NextResponse.redirect(url);
   }
 
-  // Rediriger vers profile si non authentifié sur une route admin
-  if (adminRoutes.includes(pathname) && !isAuthenticated) {
-    return NextResponse.redirect(new URL('/profile', request.url));
-  }
-
-  // Rediriger vers profile si déjà authentifié sur login
-  if (isAuthenticated && pathname === '/login') {
-    return NextResponse.redirect(new URL('/profile', request.url));
+  // Si l'utilisateur a un token et essaie d'accéder à une route publique
+  if (token && isPublicPath) {
+    return NextResponse.redirect(new URL('/dashboard', request.url));
   }
 
   return NextResponse.next();
@@ -35,8 +37,13 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/dashboard/:path*',
-    '/profile/:path*',
-    '/login',
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     */
+    '/((?!api|_next/static|_next/image|favicon.ico).*)',
   ],
 }; 

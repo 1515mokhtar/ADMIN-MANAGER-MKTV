@@ -4,7 +4,7 @@ export function Logo() {
   return (
     <div className="flex items-center gap-4">
       <Image
-        src="/images/logo.png"
+        src="/images/logo/logo.png"
         alt="MKTV Logo"
         width={180}
         height={60}
