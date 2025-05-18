@@ -81,7 +81,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
           setError(null);
 
           // Rediriger uniquement si on est sur /login ou /
-          const from = searchParams.get('from');
+          const from = searchParams?.get('from');
           if (from) {
             router.push(from);
           } else if (pathname === '/login' || pathname === '/') {
@@ -157,7 +157,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       Cookies.set('auth-token', token, { expires: 7 }); // Expire dans 7 jours
 
       // Rediriger uniquement si on est sur /login ou /
-      const from = searchParams.get('from');
+      const from = searchParams?.get('from');
       if (from) {
         router.push(from);
       } else if (pathname === '/login' || pathname === '/') {
