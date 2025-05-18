@@ -2,7 +2,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { Metadata } from "next";
 import SignInForm from "@/components/Auth/LoginForm";
-import { type ThemeProviderProps } from "next-themes/dist/types"
 
 export const metadata: Metadata = {
   title: "Sign In | MKTV Admin Dashboard",
